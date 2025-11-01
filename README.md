@@ -1,97 +1,203 @@
-# Bumi Asri Parahyangan (Laravel)
+# Bumi Asri Parahyangan
 
-Website properti untuk perumahan Bumi Asri Parahyangan.
+Website properti perumahan Bumi Asri Parahyangan yang dibangun dengan Laravel 11, menampilkan unit properti, galeri, fasilitas, dan sistem kontak.
 
-## 🚀 Quick Links
+## Tech Stack
 
-- **[Railway Deployment Guide](./RAILWAY_DEPLOYMENT.md)** - Deploy ke production
-- **[Deployment Checklist](./DEPLOYMENT_CHECKLIST.md)** - 47 items checklist sebelum deploy
-- **[Cleanup Report](./CLEANUP_REPORT.md)** - File & database optimization results
+- Laravel 11 (PHP 8.2+)
+- SQLite Database
+- Tailwind CSS 3
+- Alpine.js
+- AOS (Animate On Scroll)
+- Vite
 
-## 🔧 Development
+## Features
 
-- Default admin user (seeded): `admin@example.com` / `password`
-- To run locally:
+- Responsive modern design dengan animasi halus
+- Unit properti dengan filter dan detail lengkap
+- Galeri gambar dengan lightbox
+- Fasilitas perumahan
+- Form kontak dengan email notification
+- Admin dashboard untuk manage konten
+- SEO optimized dengan Schema.org structured data
+- Smooth scroll dan scroll-to-top button
+- Animated counter statistics
+- Database indexing untuk performa optimal
+- Security headers dan CSRF protection
 
-```powershell
-# create .env from example
-copy .env.example .env
+## Requirements
+
+- PHP 8.2 atau lebih tinggi
+- Composer
+- Node.js & NPM
+- SQLite extension enabled
+
+## Installation
+
+1. Clone repository
+
+```bash
+git clone https://github.com/ijengr/bumiasriparahyangan.git
+cd bumiasriparahyangan
+```
+
+2. Install dependencies
+
+```bash
 composer install
+npm install
+```
+
+3. Setup environment
+
+```bash
+copy .env.example .env
 php artisan key:generate
+```
+
+4. Configure database di .env (default SQLite)
+
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=/absolute/path/to/database/database.sqlite
+```
+
+5. Jalankan migration dan seeder
+
+```bash
 php artisan migrate --seed
 php artisan storage:link
-npm install
+```
+
+6. Build assets
+
+```bash
 npm run dev
+```
+
+7. Jalankan development server
+
+```bash
 php artisan serve
 ```
 
-Storage link note
+Website akan berjalan di http://127.0.0.1:8000
 
-- The project uses `storage/app/public` for uploaded files and the web-accessible link at `public/storage`.
-- If you move the entire project folder to another location, re-run:
+## Default Admin Account
 
-```powershell
-Remove-Item -Path .\public\storage -Recurse -Force
-php artisan storage:link
+- Email: admin@example.com
+- Password: password
+
+## Project Structure
+
+```
+app/
+  ├── Http/Controllers/     # Controllers untuk halaman dan admin
+  ├── Models/              # Eloquent models (Unit, Facility, Gallery, Message, Setting)
+  ├── Services/            # Business logic services
+  └── Helpers/             # Helper classes (Cache, Image, Theme)
+  
+resources/
+  ├── views/
+  │   ├── landing/        # Public pages (home, units, gallery, contact)
+  │   ├── admin/          # Admin dashboard pages
+  │   └── layouts/        # Layout templates
+  ├── css/                # Tailwind CSS
+  └── js/                 # JavaScript files
+  
+database/
+  ├── migrations/         # Database migrations
+  └── seeders/           # Database seeders
+  
+public/
+  ├── images/            # Static images
+  └── storage/           # Symlink to storage/app/public
 ```
 
-This repository uses a relative junction for `public/storage` to reduce breakage when the project folder is moved inside the same drive.
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Database Schema
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+- users - Admin users
+- units - Property units dengan spesifikasi
+- facilities - Fasilitas perumahan
+- gallery_images - Galeri foto
+- messages - Pesan kontak dari pengunjung
+- settings - Dynamic settings untuk konten website
 
-## About Laravel
+## Available Scripts
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Development:
+```bash
+npm run dev          # Start Vite dev server
+php artisan serve    # Start Laravel server
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Production:
+```bash
+npm run build        # Build assets untuk production
+php artisan optimize # Cache routes, config, views
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Database:
+```bash
+php artisan migrate:fresh --seed  # Reset database dengan data baru
+php artisan db:seed               # Seed database saja
+```
 
-## Learning Laravel
+Cache:
+```bash
+php artisan cache:clear   # Clear application cache
+php artisan view:clear    # Clear compiled views
+php artisan config:clear  # Clear config cache
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Deployment Options
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Railway.app (Recommended)
+1. Sign up di railway.app
+2. Connect GitHub repository
+3. Add MySQL/PostgreSQL database
+4. Set environment variables
+5. Deploy otomatis
 
-## Laravel Sponsors
+### Fly.io
+1. Install flyctl CLI
+2. Run `fly launch`
+3. Configure fly.toml
+4. Deploy dengan `fly deploy`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Traditional Hosting
+1. Upload files via FTP/SFTP
+2. Setup database (MySQL/PostgreSQL)
+3. Configure .env dengan production settings
+4. Run migrations: `php artisan migrate --force`
+5. Build assets: `npm run build`
+6. Set proper permissions untuk storage/ dan bootstrap/cache/
 
-### Premium Partners
+## Performance Optimizations
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- Database indexes pada frequently queried columns
+- Image optimization dengan Intervention Image
+- View caching dan query caching
+- Lazy loading untuk images
+- CSS/JS minification via Vite
+- CDN ready untuk static assets
 
-## Contributing
+## Security Features
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- CSRF protection pada semua forms
+- SQL injection protection via Eloquent ORM
+- XSS protection dengan Blade templating
+- Rate limiting pada contact form
+- Secure headers (X-Frame-Options, X-Content-Type-Options)
+- Input validation dan sanitization
 
-## Code of Conduct
+## Browser Support
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the MIT license.
