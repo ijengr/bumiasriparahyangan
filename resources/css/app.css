@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+    
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+    
+    @keyframes blob {
+        0%, 100% {
+            transform: translate(0, 0) scale(1);
+        }
+        33% {
+            transform: translate(30px, -50px) scale(1.1);
+        }
+        66% {
+            transform: translate(-20px, 20px) scale(0.9);
+        }
+    }
+}
+
+/* Image Loading Optimization */
+@layer base {
+    /* Lazy loading images - fade in when loaded */
+    img[loading="lazy"] {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+    
+    img[loading="lazy"].loaded,
+    img[loading="lazy"]:not([src*="data:image"]) {
+        opacity: 1;
+    }
+    
+    /* Prevent layout shift during image load */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Smooth image decode */
+    img[decoding="async"] {
+        will-change: auto;
+    }
+}
+
+/* Admin messages per-page select styling to hide native arrows and show custom icon */
+@layer components {
+    .admin-perpage-select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: none !important;
+    }
+    .admin-perpage-select::-ms-expand { display: none; }
+}
