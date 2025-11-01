@@ -150,29 +150,6 @@ php artisan view:clear    # Clear compiled views
 php artisan config:clear  # Clear config cache
 ```
 
-## Deployment Options
-
-### Railway.app (Recommended)
-1. Sign up di railway.app
-2. Connect GitHub repository
-3. Add MySQL/PostgreSQL database
-4. Set environment variables
-5. Deploy otomatis
-
-### Fly.io
-1. Install flyctl CLI
-2. Run `fly launch`
-3. Configure fly.toml
-4. Deploy dengan `fly deploy`
-
-### Traditional Hosting
-1. Upload files via FTP/SFTP
-2. Setup database (MySQL/PostgreSQL)
-3. Configure .env dengan production settings
-4. Run migrations: `php artisan migrate --force`
-5. Build assets: `npm run build`
-6. Set proper permissions untuk storage/ dan bootstrap/cache/
-
 ## Performance Optimizations
 
 - Database indexes pada frequently queried columns
