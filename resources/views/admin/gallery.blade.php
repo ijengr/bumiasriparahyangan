@@ -216,7 +216,7 @@ function initGalleryModal(modalRoot){
 										try {
 											const wrapper = document.createElement('div'); wrapper.className = 'group'; wrapper.innerHTML = html; document.querySelector('.grid')?.prepend(wrapper);
 											const cb = wrapper.querySelector && wrapper.querySelector('input[data-bulk]'); if (cb) cb.checked = shouldCheck;
-										} catch(e) { console.debug('insert returned row failed', e); }
+										} catch(e) {  }
 									});
 									mergedRows.push(...json.rows);
 									if (previewNode) { const icon = previewNode.querySelector('.upload-status-icon'); if (icon) { icon.innerHTML = '<svg class="h-4 w-4 text-emerald-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>'; icon.classList.remove('hidden'); } }
@@ -224,7 +224,7 @@ function initGalleryModal(modalRoot){
 									if (previewNode) { const icon = previewNode.querySelector('.upload-status-icon'); if (icon) { icon.innerHTML = '<svg class="h-4 w-4 text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 8v.01"/></svg>'; icon.classList.remove('hidden'); } }
 								}
 							} catch (err) {
-								console.error('Upload failed for file', file.name, err);
+								
 								const icon = previewsArr[i] && previewsArr[i].querySelector('.upload-status-icon'); if (icon) { icon.innerHTML = '<svg class="h-4 w-4 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'; icon.classList.remove('hidden'); }
 							}
 							uploadedBefore += (file.size || 0);
@@ -258,7 +258,7 @@ function initGalleryModal(modalRoot){
 					if (modalRootEl) modalRootEl.querySelector('.modal-close-top')?.click();
 					showToast(mergedRows.length ? (mergedRows.length + ' foto diunggah') : 'Foto berhasil diunggah', 'success');
 				} catch (err) {
-					console.error('Gallery AJAX upload failed', err);
+					
 					showToast('Gagal mengunggah foto', 'error');
 				} finally {
 					if (submitBtn) { submitBtn.disabled = false; if (originalText) submitBtn.innerText = originalText; }
@@ -266,7 +266,7 @@ function initGalleryModal(modalRoot){
 			});
 			modalForm._wiredGallerySubmit = true;
 		}
-	} catch (e) { console.debug('initGalleryModal failed', e); }
+	} catch (e) {  }
 }
 
 // Preview helpers (shared between initGalleryModal and fallback wiring)
@@ -318,9 +318,9 @@ document.getElementById('create-gallery-btn')?.addEventListener('click', functio
 		.then(r => r.text())
 		.then(html => {
 			const modal = openModal(html);
-			try { initGalleryModal(modal); } catch (err) { console.debug('initGalleryModal call failed', err); }
+			try { initGalleryModal(modal); } catch (err) {  }
 		})
-		.catch(err => console.error('Failed to load gallery create form', err));
+		.catch(err => );
 });
 
 // select-all wiring
@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				const spinner = dlBtn.querySelector('.dl-spinner');
 				if (label) label.classList.remove('hidden');
 				if (spinner) spinner.classList.add('hidden');
-				console.error('Bulk download failed', err);
+				
 				// Fallback: navigate to endpoint with ids as query param
 				const url = new URL(endpoint, window.location.origin);
 				url.searchParams.set('ids', ids.join(','));
@@ -427,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function(){
 					showToast('Foto dihapus', 'success');
 				}
 			}).catch(err => {
-				console.error('Single delete failed', err);
+				
 				showToast('Gagal menghapus foto', 'error');
 			});
 		});
@@ -499,7 +499,7 @@ document.addEventListener('click', function(e){
 					cap.textContent = val;
 				}
 				input.replaceWith(cap);
-			}).catch(err => { console.error('Failed to update caption', err); input.replaceWith(cap); });
+			}).catch(err => {  input.replaceWith(cap); });
 	}
 
 	input.addEventListener('blur', function(){ save(); });
@@ -508,3 +508,4 @@ document.addEventListener('click', function(e){
 });
 </script>
 @endpush
+

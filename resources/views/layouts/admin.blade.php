@@ -502,8 +502,8 @@
                 localStorage.setItem('darkTheme', dark ? '1' : '0');
                 // swap icon (simple)
                 if (themeIcon) themeIcon.innerHTML = dark ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>' : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1M4.22 4.22l.7.7M18.36 18.36l.7.7M1 12h1m16 0h1M4.22 19.78l.7-.7M18.36 5.64l.7-.7"/>';
-                console.debug('[theme] setTheme ->', dark);
-            } catch (e) { console.error('setTheme failed', e); }
+                
+            } catch (e) {  }
         }
 
         themeToggle?.addEventListener('click', () => {
@@ -511,7 +511,7 @@
                 const currently = localStorage.getItem('darkTheme') === '1';
                 const next = !currently;
                 setTheme(next);
-            } catch (e) { console.error('theme toggle failed', e); }
+            } catch (e) {  }
         });
 
         // initialize theme: prefer saved setting, otherwise use system preference
@@ -520,7 +520,7 @@
                 const saved = localStorage.getItem('darkTheme');
                 const prefers = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
                 if (saved === '1' || saved === '0') setTheme(saved === '1'); else setTheme(prefers);
-            } catch (e) { console.error('theme init failed', e); }
+            } catch (e) {  }
         }, 100);
 
         // Mobile off-canvas toggling
@@ -628,7 +628,7 @@
             const opener = document.activeElement;
 
             // setup helpers for content (image preview, price formatting etc)
-            try { setupModalFormHelpers(content); } catch(e){ console.error('setupModalFormHelpers failed', e); }
+            try { setupModalFormHelpers(content); } catch(e){  }
 
             // Accessible focusable elements inside modal
             const focusableSelector = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -802,7 +802,7 @@
                     }
                 }
 
-                console.debug('[ajaxSubmitForm] response status:', res.status, 'content-type:', ct);
+                
                 if (!res.ok) {
                     if (res.status === 422 && json && json.errors) {
                         showFormErrors(form, json.errors);
@@ -830,7 +830,7 @@
                 }
 
                 // success: insert or update row
-                console.debug('[ajaxSubmitForm] parsed json:', json, 'textLen:', text ? text.length : 0);
+                
                 if (json && json.row && json.unit) {
                     const parser = new DOMParser();
                     let doc = parser.parseFromString(json.row || '', 'text/html');
@@ -841,13 +841,13 @@
                             const temp = document.createElement('tbody');
                             temp.innerHTML = json.row;
                             newRow = temp.querySelector('tr');
-                            console.debug('[ajaxSubmitForm] fallback parsed newRow via innerHTML?', !!newRow);
-                        } catch (e) { console.debug('[ajaxSubmitForm] fallback parse failed', e); }
+                            
+                        } catch (e) {  }
                     }
                     // try to find existing row by id or data-unit-id attribute
                     let existing = document.getElementById('unit-row-' + json.unit.id);
                     if (!existing) existing = document.querySelector('tr[data-unit-id="' + json.unit.id + '"]');
-                    console.debug('[ajaxSubmitForm] newRow found?', !!newRow, 'existingRow?', !!existing);
+                    
                     if (newRow) {
                         // ensure newRow has identifying attributes so subsequent lookups work
                         if (!newRow.getAttribute('id')) newRow.setAttribute('id', 'unit-row-' + json.unit.id);
@@ -877,7 +877,7 @@
                             }
                         }
                     } else if (existing && json.unit) {
-                        console.debug('[ajaxSubmitForm] falling back to patch existing row');
+                        
                         // Fallback: update fields in place using known data points
                         try {
                             const titleEl = existing.querySelector('[data-unit-title]');
@@ -891,8 +891,8 @@
                                 thumbEl.src = imgSrc;
                             }
                             if (priceEl) priceEl.textContent = 'Rp ' + (json.unit.price ? Number(json.unit.price).toLocaleString('id-ID') : '-');
-                            console.debug('[ajaxSubmitForm] patched existing row for unit', json.unit.id);
-                        } catch (e) { console.error('Failed to patch existing row', e); }
+                            
+                        } catch (e) {  }
                     }
                 } else if (json && Array.isArray(json.rows) && json.rows.length) {
                     // Generic handler for endpoints that return multiple rendered rows (e.g., gallery multi-upload)
@@ -925,9 +925,9 @@
                                         try { modalContainer.insertAdjacentHTML('afterend', html); } catch(e){}
                                     }
                                 }
-                            } catch (innerErr) { console.debug('Failed to insert row fragment', innerErr); }
+                            } catch (innerErr) {  }
                         });
-                    } catch (e) { console.debug('Failed to process json.rows', e); }
+                    } catch (e) {  }
                 } else if (json && Array.isArray(json.items) && json.items.length) {
                     // If server returned items (model data) but no rendered rows, create simple gallery cards
                     try {
@@ -947,11 +947,11 @@
                                     </div>
                                 `;
                                 if (grid) grid.prepend(wrapper);
-                            } catch (e) { console.debug('Failed to render item', e); }
+                            } catch (e) {  }
                         });
-                    } catch (e) { console.debug('Failed to process json.items', e); }
+                    } catch (e) {  }
                 } else if (!json && text) {
-                    console.debug('[ajaxSubmitForm] no json, have text; trying to extract <tr> from HTML response');
+                    
                     // If server returned HTML (not JSON), try to extract a <tr> and use it
                     try {
                         const parser = new DOMParser();
@@ -960,7 +960,7 @@
                         if (newRow) {
                             const tbody = document.querySelector('table.min-w-full tbody');
                             const idAttr = newRow.getAttribute('id');
-                            console.debug('[ajaxSubmitForm] extracted newRow idAttr:', idAttr);
+                            
                             if (idAttr) {
                                 const existing = document.getElementById(idAttr);
                                 if (existing) existing.replaceWith(newRow);
@@ -982,7 +982,7 @@
                 }
                 showToast(json && json.message ? json.message : 'Sukses', 'success');
             } catch (err) {
-                console.error('AJAX form submit failed', err);
+                
                 showToast('Gagal menyimpan data', 'error');
             }
         }
@@ -1189,7 +1189,7 @@
                     }).catch(err => {
                         btn.disabled = false;
                         btn.innerText = originalText;
-                        console.error('Bulk delete failed', err);
+                        
                         const message = (err && err.message) ? err.message : ('Gagal menghapus ' + bulkName);
                         showToast(message, 'error');
                     });
@@ -1348,7 +1348,7 @@
                             openModal(html);
                         }
                     }).catch(err => {
-                        console.error('Failed to load edit form', err);
+                        
                         showToast('Gagal memuat form edit', 'error');
                     });
             }
@@ -1364,7 +1364,7 @@
                     // server partial already includes form; inject directly
                     openModal(html);
                 }).catch(err => {
-                    console.error('Failed to load create form', err);
+                    
                     showToast('Gagal memuat form create', 'error');
                 });
         });
@@ -1378,7 +1378,7 @@
                 .then(html => {
                     openModal(html);
                 }).catch(err => {
-                    console.error('Failed to load create facility form', err);
+                    
                     showToast('Gagal memuat form create', 'error');
                 });
         });
@@ -1463,3 +1463,4 @@
     @stack('scripts')
 </body>
 </html>
+

@@ -178,11 +178,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         lastModified: Date.now()
                     }));
                     imageInput.files = dataTransfer.files;
-                    
-                    console.log('Image compressed:', (file.size / 1024 / 1024).toFixed(2), 'MB →', (result.size / 1024 / 1024).toFixed(2), 'MB');
                 },
                 error(err) {
-                    console.error('Compression error:', err);
                     // Fallback to original
                     const reader = new FileReader();
                     reader.onload = function(e) {
@@ -216,11 +213,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         if (processed === files.length) {
                             additionalInput.files = dataTransfer.files;
-                            console.log(`Compressed ${processed} additional images`);
                         }
                     },
                     error(err) {
-                        console.error('Compression error for file', index, err);
                         dataTransfer.items.add(file);
                         processed++;
                         
@@ -234,3 +229,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+

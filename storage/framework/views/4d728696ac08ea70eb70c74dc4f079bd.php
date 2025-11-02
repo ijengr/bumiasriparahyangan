@@ -1,16 +1,16 @@
-@extends('layouts.app')
 
-@section('content')
-{{-- Hero Section with Modern Gradient Background --}}
+
+<?php $__env->startSection('content'); ?>
+
 <section class="relative bg-gradient-to-br from-emerald-50 via-white to-teal-50 overflow-hidden min-h-screen flex items-center">
-    {{-- Animated Decorative Elements --}}
+    
     <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-300/30 to-emerald-500/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
     <div class="absolute top-20 left-20 w-72 h-72 bg-gradient-to-br from-teal-300/30 to-teal-500/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
     <div class="absolute -bottom-8 left-1/2 w-96 h-96 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {{-- Hero Content --}}
+            
             <div class="space-y-8" data-aos="fade-right">
                 <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm shadow-lg border border-emerald-100 text-emerald-700 px-5 py-2.5 rounded-full text-sm font-semibold">
                     <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
@@ -23,22 +23,23 @@
                 </h1>
                 
                 <p class="text-xl text-gray-600 max-w-2xl leading-relaxed">
-                    {{ $siteSettings['hero_subtitle'] ?? 'Bumi Asri Parahyangan menghadirkan hunian dengan lingkungan hijau, fasilitas modern, dan suasana komunitas yang ramah. Pilih unit yang cocok untuk gaya hidup Anda.' }}
+                    <?php echo e($siteSettings['hero_subtitle'] ?? 'Bumi Asri Parahyangan menghadirkan hunian dengan lingkungan hijau, fasilitas modern, dan suasana komunitas yang ramah. Pilih unit yang cocok untuk gaya hidup Anda.'); ?>
+
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="{{ route('landing.units') }}" class="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-600 hover:from-emerald-700 hover:via-emerald-800 hover:to-teal-700 text-white px-10 py-5 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 font-bold text-lg overflow-hidden">
+                    <a href="<?php echo e(route('landing.units')); ?>" class="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-600 hover:from-emerald-700 hover:via-emerald-800 hover:to-teal-700 text-white px-10 py-5 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 font-bold text-lg overflow-hidden">
                         <div class="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                        <span class="relative">{{ $siteSettings['btn_view_units'] ?? 'Lihat Unit' }}</span>
+                        <span class="relative"><?php echo e($siteSettings['btn_view_units'] ?? 'Lihat Unit'); ?></span>
                         <svg class="relative w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </a>
-                    <a href="{{ route('landing.contact') }}" class="inline-flex items-center justify-center gap-2 bg-white hover:bg-emerald-50 border-2 border-emerald-600 text-emerald-700 hover:border-emerald-700 px-10 py-5 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 font-bold text-lg">
+                    <a href="<?php echo e(route('landing.contact')); ?>" class="inline-flex items-center justify-center gap-2 bg-white hover:bg-emerald-50 border-2 border-emerald-600 text-emerald-700 hover:border-emerald-700 px-10 py-5 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 font-bold text-lg">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        <span>{{ $siteSettings['btn_contact_us'] ?? 'Hubungi Kami' }}</span>
+                        <span><?php echo e($siteSettings['btn_contact_us'] ?? 'Hubungi Kami'); ?></span>
                     </a>
                 </div>
 
-                {{-- Enhanced Feature Pills --}}
+                
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6">
                     <div class="group relative p-5 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-emerald-100/50 hover:border-emerald-200 overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-teal-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -47,8 +48,8 @@
                                 <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             </div>
                             <div>
-                                <div class="text-sm font-bold text-gray-900">{{ $siteSettings['feature1_title'] ?? 'Lokasi Strategis' }}</div>
-                                <div class="text-xs text-gray-600 mt-0.5">{{ $siteSettings['feature1_subtitle'] ?? 'Akses mudah ke fasilitas publik' }}</div>
+                                <div class="text-sm font-bold text-gray-900"><?php echo e($siteSettings['feature1_title'] ?? 'Lokasi Strategis'); ?></div>
+                                <div class="text-xs text-gray-600 mt-0.5"><?php echo e($siteSettings['feature1_subtitle'] ?? 'Akses mudah ke fasilitas publik'); ?></div>
                             </div>
                         </div>
                     </div>
@@ -59,8 +60,8 @@
                                 <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                             </div>
                             <div>
-                                <div class="text-sm font-bold text-gray-900">{{ $siteSettings['feature2_title'] ?? 'Keamanan 24/7' }}</div>
-                                <div class="text-xs text-gray-600 mt-0.5">{{ $siteSettings['feature2_subtitle'] ?? 'Area aman & terpantau' }}</div>
+                                <div class="text-sm font-bold text-gray-900"><?php echo e($siteSettings['feature2_title'] ?? 'Keamanan 24/7'); ?></div>
+                                <div class="text-xs text-gray-600 mt-0.5"><?php echo e($siteSettings['feature2_subtitle'] ?? 'Area aman & terpantau'); ?></div>
                             </div>
                         </div>
                     </div>
@@ -71,24 +72,24 @@
                                 <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
                             </div>
                             <div>
-                                <div class="text-sm font-bold text-gray-900">{{ $siteSettings['feature3_title'] ?? 'Ruang Hijau' }}</div>
-                                <div class="text-xs text-gray-600 mt-0.5">{{ $siteSettings['feature3_subtitle'] ?? 'Taman & jalur pejalan kaki' }}</div>
+                                <div class="text-sm font-bold text-gray-900"><?php echo e($siteSettings['feature3_title'] ?? 'Ruang Hijau'); ?></div>
+                                <div class="text-xs text-gray-600 mt-0.5"><?php echo e($siteSettings['feature3_subtitle'] ?? 'Taman & jalur pejalan kaki'); ?></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- Enhanced Hero Image --}}
+            
             <div class="relative" data-aos="fade-left" data-aos-delay="200">
                 <div class="relative group">
-                    {{-- Glowing background --}}
+                    
                     <div class="absolute -inset-6 bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 rounded-3xl blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
                     
-                    {{-- Main card with glassmorphism --}}
+                    
                     <div class="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden transform group-hover:-translate-y-3 transition-all duration-500 border border-white/50">
                         <div class="relative h-96 lg:h-[32rem] overflow-hidden"
-                            @php
+                            <?php
                                 // Build hero rotator URLs from $gallery (shuffle -> take 6)
                                 $pool = collect($gallery ?? [])->shuffle()->take(6)->values();
                                 $heroUrls = [];
@@ -120,26 +121,26 @@
                                     }
                                     $heroUrls[] = $imgUrl;
                                 }
-                            @endphp
+                            ?>
 
-                            @if(count($heroUrls) > 0)
-                            <div class="relative rounded-3xl overflow-hidden h-full hero-rotator" data-images='{{ json_encode($heroUrls) }}'>
-                                <img src="{{ $heroUrls[0] }}" alt="Bumi Asri Parahyangan" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000 rotator-hero-img" fetchpriority="high" loading="eager">
+                            <?php if(count($heroUrls) > 0): ?>
+                            <div class="relative rounded-3xl overflow-hidden h-full hero-rotator" data-images='<?php echo e(json_encode($heroUrls)); ?>'>
+                                <img src="<?php echo e($heroUrls[0]); ?>" alt="Bumi Asri Parahyangan" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000 rotator-hero-img" fetchpriority="high" loading="eager">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                                 
-                                {{-- Image counter indicator --}}
+                                
                                 <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                                    @foreach($heroUrls as $index => $url)
-                                    <div class="w-2 h-2 bg-white/50 hover:bg-white rounded-full transition-all {{ $index === 0 ? 'w-8 bg-white' : '' }} rotator-indicator" data-index="{{ $index }}"></div>
-                                    @endforeach
+                                    <?php $__currentLoopData = $heroUrls; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="w-2 h-2 bg-white/50 hover:bg-white rounded-full transition-all <?php echo e($index === 0 ? 'w-8 bg-white' : ''); ?> rotator-indicator" data-index="<?php echo e($index); ?>"></div>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                             </div>
-                            @else
+                            <?php else: ?>
                             <img src="https://images.unsplash.com/photo-1505691723518-36a2c0b9a4b4?auto=format&fit=crop&w=1200&q=80" alt="Bumi Asri Parahyangan" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" fetchpriority="high" loading="eager">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-                            @endif
+                            <?php endif; ?>
                             
-                            {{-- Floating badges --}}
+                            
                             <div class="absolute top-6 right-6 flex flex-col gap-3">
                                 <div class="bg-white/95 backdrop-blur-md px-5 py-3 rounded-2xl shadow-2xl border border-white/20">
                                     <div class="flex items-center gap-3">
@@ -160,8 +161,8 @@
                         </div>
                         
                         <div class="p-8 lg:p-10 bg-gradient-to-br from-white to-emerald-50/30">
-                            <h3 class="text-2xl font-bold text-gray-900 mb-3">{{ $siteSettings['community_card_title'] ?? 'Komunitas yang Asri' }}</h3>
-                            <p class="text-gray-600 leading-relaxed">{{ $siteSettings['community_card_description'] ?? 'Lingkungan dirancang untuk kehidupan keluarga — nyaman, aman, dan terhubung dengan alam.' }}</p>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-3"><?php echo e($siteSettings['community_card_title'] ?? 'Komunitas yang Asri'); ?></h3>
+                            <p class="text-gray-600 leading-relaxed"><?php echo e($siteSettings['community_card_description'] ?? 'Lingkungan dirancang untuk kehidupan keluarga — nyaman, aman, dan terhubung dengan alam.'); ?></p>
                             
                             <div class="mt-8 flex flex-wrap items-center gap-6">
                                 <div class="flex -space-x-3">
@@ -173,7 +174,7 @@
                                 <div class="flex-1">
                                     <div class="flex items-center gap-2 text-emerald-700">
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                        <span class="text-sm font-bold">{{ $siteSettings['community_card_stat'] ?? '100+ keluarga bahagia' }}</span>
+                                        <span class="text-sm font-bold"><?php echo e($siteSettings['community_card_stat'] ?? '100+ keluarga bahagia'); ?></span>
                                     </div>
                                     <div class="text-xs text-gray-500 mt-1">Bergabung dengan komunitas kami</div>
                                 </div>
@@ -186,9 +187,9 @@
     </div>
 </section>
 
-{{-- Statistics Counter Section --}}
+
 <section class="relative bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-600 py-16 lg:py-24 overflow-hidden">
-    {{-- Animated Background Decorations --}}
+    
     <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
     <div class="absolute bottom-0 left-0 w-80 h-80 bg-teal-400/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full">
@@ -215,7 +216,7 @@
                     </div>
                 </div>
                 <div class="text-4xl lg:text-5xl font-extrabold text-white mb-2 tabular-nums">
-                    <span class="counter" data-target="{{ \App\Models\Unit::count() }}">0</span>+
+                    <span class="counter" data-target="<?php echo e(\App\Models\Unit::count()); ?>">0</span>+
                 </div>
                 <div class="text-emerald-100 font-semibold text-sm lg:text-base">Unit Tersedia</div>
             </div>
@@ -245,7 +246,7 @@
                     </div>
                 </div>
                 <div class="text-4xl lg:text-5xl font-extrabold text-white mb-2 tabular-nums">
-                    <span class="counter" data-target="{{ \App\Models\Facility::count() }}">0</span>+
+                    <span class="counter" data-target="<?php echo e(\App\Models\Facility::count()); ?>">0</span>+
                 </div>
                 <div class="text-emerald-100 font-semibold text-sm lg:text-base">Fasilitas Premium</div>
             </div>
@@ -292,38 +293,40 @@
     </div>
 </section>
 
-{{-- Featured Units Section --}}
+
 <section class="relative bg-gradient-to-b from-white via-gray-50 to-white py-20 lg:py-32 overflow-hidden">
-    {{-- Decorative Background --}}
+    
     <div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-emerald-50/50 to-transparent"></div>
     <div class="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-teal-100/30 to-transparent rounded-full blur-3xl"></div>
     
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {{-- Section Header --}}
+        
         <div class="text-center mb-16" data-aos="fade-up">
             <div class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-100 to-teal-100 px-6 py-2.5 rounded-full mb-6">
                 <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clip-rule="evenodd"/></svg>
                 <span class="text-sm font-bold text-emerald-700">PILIHAN TERBAIK</span>
             </div>
             <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
-                {{ $siteSettings['featured_title'] ?? 'Unit Unggulan' }}
+                <?php echo e($siteSettings['featured_title'] ?? 'Unit Unggulan'); ?>
+
             </h2>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                {{ $siteSettings['featured_subtitle'] ?? 'Pilihan unit terbaik kami — dipilih berdasarkan lokasi dan desain.' }}
+                <?php echo e($siteSettings['featured_subtitle'] ?? 'Pilihan unit terbaik kami — dipilih berdasarkan lokasi dan desain.'); ?>
+
             </p>
         </div>
 
-        {{-- Grid Layout: Units + Sidebar --}}
+        
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-            {{-- Main Content: Units Grid --}}
+            
             <div class="lg:col-span-2">
                 <div id="units-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12" data-aos="fade-up" data-aos-delay="200">
-                    @include('landing._unit_cards', ['units' => $units])
+                    <?php echo $__env->make('landing._unit_cards', ['units' => $units], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                 </div>
 
-                {{-- View All Button --}}
+                
                 <div class="flex justify-center" data-aos="fade-up" data-aos-delay="400">
-                    <a href="{{ route('landing.units') }}" class="group relative inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-10 py-5 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 font-bold text-lg overflow-hidden">
+                    <a href="<?php echo e(route('landing.units')); ?>" class="group relative inline-flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-10 py-5 rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 font-bold text-lg overflow-hidden">
                         <div class="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                         <span class="relative">Lihat Semua Unit</span>
                         <svg class="relative w-6 h-6 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
@@ -331,25 +334,25 @@
                 </div>
             </div>
 
-            {{-- Sidebar --}}
+            
             <aside class="space-y-8" data-aos="fade-left" data-aos-delay="200">
-                {{-- Facilities Card --}}
+                
                 <div class="relative group bg-white rounded-3xl shadow-xl border border-emerald-100/50 overflow-hidden hover:shadow-2xl transition-all duration-500">
-                    {{-- Decorative background --}}
+                    
                     <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-emerald-400/10 to-teal-400/10 rounded-full blur-3xl"></div>
                     
                     <div class="relative bg-gradient-to-br from-emerald-600 via-emerald-600 to-teal-600 p-8">
                         <div class="flex items-start justify-between mb-2">
                             <div class="flex-1">
-                                <h3 class="text-2xl font-extrabold text-white mb-1.5">{{ $siteSettings['facilities_title'] ?? 'Fasilitas Unggulan' }}</h3>
-                                <p class="text-emerald-100 text-sm">{{ $siteSettings['facilities_subtitle'] ?? 'Kemudahan untuk Anda' }}</p>
+                                <h3 class="text-2xl font-extrabold text-white mb-1.5"><?php echo e($siteSettings['facilities_title'] ?? 'Fasilitas Unggulan'); ?></h3>
+                                <p class="text-emerald-100 text-sm"><?php echo e($siteSettings['facilities_subtitle'] ?? 'Kemudahan untuk Anda'); ?></p>
                             </div>
                             <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-500">
                                 <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
                             </div>
                         </div>
                         
-                        {{-- Decorative wave --}}
+                        
                         <div class="absolute bottom-0 left-0 right-0">
                             <svg class="w-full h-4 text-white" viewBox="0 0 1200 20" preserveAspectRatio="none">
                                 <path d="M0,10 Q300,0 600,10 T1200,10 L1200,20 L0,20 Z" fill="currentColor"/>
@@ -359,24 +362,24 @@
                     
                     <div class="relative bg-white p-8">
                         <ul class="space-y-4">
-                            @forelse($facilities as $facility)
+                            <?php $__empty_1 = true; $__currentLoopData = $facilities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $facility): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <li class="group/item flex items-start gap-4 p-4 rounded-2xl hover:bg-gradient-to-r hover:from-emerald-50 hover:to-teal-50 transition-all duration-300 cursor-pointer border border-transparent hover:border-emerald-200">
                                     <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md group-hover/item:scale-110 group-hover/item:rotate-3 transition-transform duration-300">
                                         <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
                                     </div>
-                                    <span class="font-bold text-gray-900 group-hover/item:text-emerald-700 transition-colors pt-2">{{ $facility->name }}</span>
+                                    <span class="font-bold text-gray-900 group-hover/item:text-emerald-700 transition-colors pt-2"><?php echo e($facility->name); ?></span>
                                 </li>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                 <li class="flex items-center gap-3 text-gray-500 italic bg-gray-50 rounded-xl p-4 border border-dashed border-gray-300">
                                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
-                                    <span class="text-sm">{{ $siteSettings['empty_facilities'] ?? 'Belum ada fasilitas terdaftar.' }}</span>
+                                    <span class="text-sm"><?php echo e($siteSettings['empty_facilities'] ?? 'Belum ada fasilitas terdaftar.'); ?></span>
                                 </li>
-                            @endforelse
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
 
-                {{-- Gallery Preview Card --}}
+                
                 <div class="relative group bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500">
                     <div class="p-8 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
                         <div class="flex items-center justify-between">
@@ -392,9 +395,9 @@
                     
                     <div class="p-6">
                         <div class="grid grid-cols-2 gap-4 mb-6">
-                            @foreach($gallery as $img)
+                            <?php $__currentLoopData = $gallery; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <div class="relative group/img overflow-hidden rounded-2xl aspect-square shadow-md hover:shadow-xl transition-all duration-500">
-                                            @php
+                                            <?php
                                                 // More robust image selection: public -> public samples (try extensions) -> storage -> placeholder
                                                 $publicFallback = asset('images/placeholder-square.svg');
                                                 $imgPreview = $publicFallback;
@@ -431,8 +434,8 @@
                                                         }
                                                     }
                                                 }
-                                            @endphp
-                                            <img src="{{ $imgPreview }}" alt="{{ $img->caption ?? 'Gallery' }}" class="w-full h-full object-cover transform group-hover/img:scale-125 group-hover/img:rotate-2 transition-all duration-700" loading="lazy" onerror="this.onerror=null;this.src='{{ asset('images/placeholder-square.svg') }}';">
+                                            ?>
+                                            <img src="<?php echo e($imgPreview); ?>" alt="<?php echo e($img->caption ?? 'Gallery'); ?>" class="w-full h-full object-cover transform group-hover/img:scale-125 group-hover/img:rotate-2 transition-all duration-700" loading="lazy" onerror="this.onerror=null;this.src='<?php echo e(asset('images/placeholder-square.svg')); ?>';">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-500">
                                         <div class="absolute inset-0 flex items-center justify-center">
                                             <div class="bg-white/20 backdrop-blur-sm rounded-full p-3 transform scale-50 group-hover/img:scale-100 transition-transform duration-500">
@@ -440,23 +443,23 @@
                                             </div>
                                         </div>
                                         <div class="absolute bottom-3 left-3 right-3">
-                                            <p class="text-white text-sm font-bold truncate drop-shadow-lg">{{ $img->caption ?? 'Gallery Image' }}</p>
+                                            <p class="text-white text-sm font-bold truncate drop-shadow-lg"><?php echo e($img->caption ?? 'Gallery Image'); ?></p>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                         
-                        <a href="{{ route('landing.gallery') }}" class="group/btn flex items-center justify-center gap-2 w-full text-sm font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+                        <a href="<?php echo e(route('landing.gallery')); ?>" class="group/btn flex items-center justify-center gap-2 w-full text-sm font-bold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
                             <span>Lihat Galeri Lengkap</span>
                             <svg class="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                         </a>
                     </div>
                 </div>
 
-                {{-- CTA Card --}}
+                
                 <div class="relative group bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-700 rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-                    {{-- Animated background blobs --}}
+                    
                     <div class="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -mr-24 -mt-24 group-hover:scale-150 transition-transform duration-1000"></div>
                     <div class="absolute bottom-0 left-0 w-40 h-40 bg-white/10 rounded-full -ml-20 -mb-20 group-hover:scale-150 transition-transform duration-1000"></div>
                     <div class="absolute top-1/2 left-1/2 w-32 h-32 bg-teal-400/20 rounded-full blur-2xl animate-pulse"></div>
@@ -468,7 +471,7 @@
                         <h3 class="text-2xl font-extrabold mb-3 leading-tight">Butuh Informasi Lebih?</h3>
                         <p class="text-emerald-100 mb-8 text-base leading-relaxed">Hubungi kami untuk konsultasi gratis dan dapatkan penawaran terbaik untuk hunian impian Anda.</p>
                         
-                        {{-- Contact stats --}}
+                        
                         <div class="flex items-center gap-6 mb-8 pb-8 border-b border-white/20">
                             <div class="flex items-center gap-3">
                                 <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
@@ -490,7 +493,7 @@
                             </div>
                         </div>
                         
-                        <a href="{{ route('landing.contact') }}" class="group/btn relative inline-flex items-center justify-center gap-3 bg-white text-emerald-600 hover:bg-emerald-50 px-8 py-5 rounded-2xl font-bold shadow-2xl hover:shadow-emerald-900/50 transition-all transform hover:-translate-y-1 w-full overflow-hidden">
+                        <a href="<?php echo e(route('landing.contact')); ?>" class="group/btn relative inline-flex items-center justify-center gap-3 bg-white text-emerald-600 hover:bg-emerald-50 px-8 py-5 rounded-2xl font-bold shadow-2xl hover:shadow-emerald-900/50 transition-all transform hover:-translate-y-1 w-full overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-r from-emerald-100 to-teal-100 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></div>
                             <svg class="relative w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
                             <span class="relative">Hubungi Sekarang</span>
@@ -503,7 +506,7 @@
     </div>
 </section>
 
-{{-- KPR Calculator Section --}}
+
 <section class="bg-gradient-to-br from-emerald-50 via-white to-teal-50 py-16 lg:py-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12" data-aos="fade-up">
@@ -519,10 +522,10 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {{-- Calculator Form --}}
+            
             <div class="bg-white rounded-2xl shadow-xl border border-emerald-100 p-8" data-aos="fade-right">
                 <div class="space-y-6">
-                    {{-- Harga Properti --}}
+                    
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Harga Properti</label>
                         <div class="relative">
@@ -532,7 +535,7 @@
                         <input type="range" id="kpr-price-range" min="100000000" max="2000000000" step="10000000" value="600000000" class="w-full mt-3 h-2 bg-gradient-to-r from-emerald-200 to-emerald-500 rounded-lg appearance-none cursor-pointer">
                     </div>
 
-                    {{-- Uang Muka --}}
+                    
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Uang Muka (DP)</label>
                         <div class="grid grid-cols-2 gap-4">
@@ -547,7 +550,7 @@
                         </div>
                     </div>
 
-                    {{-- Jangka Waktu --}}
+                    
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Jangka Waktu</label>
                         <div class="grid grid-cols-4 gap-2">
@@ -558,7 +561,7 @@
                         </div>
                     </div>
 
-                    {{-- Suku Bunga --}}
+                    
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Suku Bunga per Tahun</label>
                         <div class="relative">
@@ -567,7 +570,7 @@
                         </div>
                     </div>
 
-                    {{-- Calculate Button --}}
+                    
                     <button id="kpr-calculate" class="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
                         <span class="flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
@@ -577,9 +580,9 @@
                 </div>
             </div>
 
-            {{-- Result Display --}}
+            
             <div class="space-y-6" data-aos="fade-left">
-                {{-- Main Result Card --}}
+                
                 <div class="bg-gradient-to-br from-emerald-600 to-teal-600 rounded-2xl shadow-xl overflow-hidden">
                     <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
                     <div class="relative p-8 text-white">
@@ -605,7 +608,7 @@
                     </div>
                 </div>
 
-                {{-- Details Card --}}
+                
                 <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
                     <h3 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
                         <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
@@ -635,7 +638,7 @@
                     </div>
                 </div>
 
-                {{-- Disclaimer --}}
+                
                 <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
                     <div class="flex gap-3">
                         <svg class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -649,7 +652,7 @@
     </div>
 </section>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const priceInput = document.getElementById('kpr-price');
@@ -795,6 +798,8 @@ counters.forEach(counter => {
     counterObserver.observe(counter);
 });
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Project\BumiAsriParahyangan\resources\views/landing/index.blade.php ENDPATH**/ ?>

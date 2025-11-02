@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function(){
 				form.submit();
 			});
 		} catch (err) {
-			console.error('confirm-delete handler error', err);
+			
 			customConfirm('Hapus fasilitas ini?', { title: 'Konfirmasi Hapus', confirmText: 'Hapus', cancelText: 'Batal' }).then(ok => { if (ok) form.submit(); });
 		}
 	});
@@ -175,8 +175,8 @@ document.addEventListener('DOMContentLoaded', function(){
 						const pagination = doc.querySelector('#facilities-pagination');
 						const paginationEl = document.getElementById('facilities-pagination');
 						if (pagination && paginationEl) paginationEl.innerHTML = pagination.innerHTML;
-					} catch (e) { console.error('Live search parse failed', e); }
-				}).catch(err => console.error('Live search failed', err));
+					} catch (e) {  }
+				}).catch(err => );
 		}
 
 		searchInput.addEventListener('input', function(e){
@@ -212,8 +212,8 @@ document.addEventListener('DOMContentLoaded', function(){
 								table.setAttribute('data-start', doc.querySelector('table.min-w-full').getAttribute('data-start') || '0');
 							}
 							history.pushState({ ajax: true }, '', url);
-						} catch (e) { console.error('AJAX pagination parse failed', e); }
-					}).catch(err => console.error('AJAX pagination failed', err));
+						} catch (e) {  }
+					}).catch(err => );
 			}
 		});
 
@@ -246,11 +246,12 @@ document.addEventListener('DOMContentLoaded', function(){
 								table.setAttribute('data-per-page', tableDoc.getAttribute('data-per-page') || '12');
 								table.setAttribute('data-start', tableDoc.getAttribute('data-start') || '0');
 							}
-						} catch (e) { console.error('popstate parse failed', e); }
-					}).catch(err => console.error('popstate fetch failed', err));
-			} catch (e) { console.error('popstate handler error', e); }
+						} catch (e) {  }
+					}).catch(err => );
+			} catch (e) {  }
 		});
 	}
 });
 </script>
 @endpush
+

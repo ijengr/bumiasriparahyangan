@@ -1679,9 +1679,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabButtons = document.querySelectorAll('.settings-tab-btn');
     const tabContents = document.querySelectorAll('.settings-tab-content');
     
-    console.log('Tab buttons found:', tabButtons.length);
-    console.log('Tab contents found:', tabContents.length);
-    
     // Form submit handling
     const settingsForm = document.getElementById('settings-form');
     const submitBtn = document.getElementById('submit-settings-btn');
@@ -1689,7 +1686,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (settingsForm) {
         settingsForm.addEventListener('submit', function(e) {
-            console.log('Form submitted');
             
             // Show loading state
             if (submitBtn) {
@@ -1702,10 +1698,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Form will submit normally
         });
-        
-        console.log('Settings form initialized');
-    } else {
-        console.error('Settings form not found!');
     }
     
     // Load saved tab from localStorage
@@ -1722,7 +1714,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to switch main tabs
     function switchTab(tabName) {
-        console.log('Switching to tab:', tabName);
         
         // Hide all tab contents
         tabContents.forEach(content => {
@@ -1737,7 +1728,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Show active tab content
         const activeContent = document.getElementById('tab-' + tabName);
-        console.log('Active content element:', activeContent);
         
         if (activeContent) {
             activeContent.classList.remove('hidden');
@@ -1761,7 +1751,6 @@ document.addEventListener('DOMContentLoaded', function() {
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
             const tabName = this.getAttribute('data-tab');
-            console.log('Tab button clicked:', tabName);
             switchTab(tabName);
         });
     });
@@ -2015,7 +2004,7 @@ async function uploadImage(input, fieldId) {
             throw new Error(data.message || 'Upload gagal');
         }
     } catch (error) {
-        console.error('Upload error:', error);
+        
         inputField.value = originalValue;
         inputField.disabled = false;
         
@@ -2098,7 +2087,7 @@ async function previewImage(input, previewId, fieldId) {
             throw new Error(data.message || 'Upload gagal');
         }
     } catch (error) {
-        console.error('Upload error:', error);
+        
         
         // Remove loading message
         document.getElementById('upload-loading-msg')?.remove();

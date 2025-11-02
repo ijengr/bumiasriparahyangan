@@ -3,15 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - {{ config('app.name', 'Bumi Asri Parahyangan') }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>Login - <?php echo e(config('app.name', 'Bumi Asri Parahyangan')); ?></title>
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 </head>
 <body class="bg-gradient-to-br from-emerald-50 via-teal-50 to-green-50 min-h-screen">
     
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full">
             
-            {{-- Logo & Title --}}
+            
             <div class="text-center mb-8">
                 <div class="flex justify-center mb-4">
                     <div class="bg-gradient-to-br from-emerald-600 to-teal-600 p-4 rounded-2xl shadow-lg">
@@ -24,16 +24,35 @@
                 <p class="text-gray-600">Login ke Dashboard Admin</p>
             </div>
 
-            {{-- Login Card --}}
+            
             <div class="bg-white rounded-2xl shadow-xl p-8 border border-emerald-100">
                 
-                {{-- Session Status --}}
-                <x-auth-session-status class="mb-4" :status="session('status')" />
+                
+                <?php if (isset($component)) { $__componentOriginal7c1bf3a9346f208f66ee83b06b607fb5 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal7c1bf3a9346f208f66ee83b06b607fb5 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.auth-session-status','data' => ['class' => 'mb-4','status' => session('status')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('auth-session-status'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'mb-4','status' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(session('status'))]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal7c1bf3a9346f208f66ee83b06b607fb5)): ?>
+<?php $attributes = $__attributesOriginal7c1bf3a9346f208f66ee83b06b607fb5; ?>
+<?php unset($__attributesOriginal7c1bf3a9346f208f66ee83b06b607fb5); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal7c1bf3a9346f208f66ee83b06b607fb5)): ?>
+<?php $component = $__componentOriginal7c1bf3a9346f208f66ee83b06b607fb5; ?>
+<?php unset($__componentOriginal7c1bf3a9346f208f66ee83b06b607fb5); ?>
+<?php endif; ?>
 
-                <form method="POST" action="{{ route('login') }}" class="space-y-6">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('login')); ?>" class="space-y-6">
+                    <?php echo csrf_field(); ?>
 
-                    {{-- Email Address --}}
+                    
                     <div>
                         <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
                             Email Address
@@ -48,7 +67,7 @@
                                 id="email" 
                                 type="email" 
                                 name="email" 
-                                value="{{ old('email') }}" 
+                                value="<?php echo e(old('email')); ?>" 
                                 required 
                                 autofocus 
                                 autocomplete="username"
@@ -56,10 +75,29 @@
                                 placeholder="admin@example.com"
                             >
                         </div>
-                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('email'),'class' => 'mt-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-error'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('email')),'class' => 'mt-2']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
                     </div>
 
-                    {{-- Password --}}
+                    
                     <div>
                         <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">
                             Password
@@ -80,10 +118,29 @@
                                 placeholder="••••••••"
                             >
                         </div>
-                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        <?php if (isset($component)) { $__componentOriginalf94ed9c5393ef72725d159fe01139746 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalf94ed9c5393ef72725d159fe01139746 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-error','data' => ['messages' => $errors->get('password'),'class' => 'mt-2']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('input-error'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['messages' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($errors->get('password')),'class' => 'mt-2']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $attributes = $__attributesOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__attributesOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalf94ed9c5393ef72725d159fe01139746)): ?>
+<?php $component = $__componentOriginalf94ed9c5393ef72725d159fe01139746; ?>
+<?php unset($__componentOriginalf94ed9c5393ef72725d159fe01139746); ?>
+<?php endif; ?>
                     </div>
 
-                    {{-- Remember Me & Forgot Password --}}
+                    
                     <div class="flex items-center justify-between">
                         <label for="remember_me" class="flex items-center cursor-pointer">
                             <input 
@@ -95,14 +152,14 @@
                             <span class="ml-2 text-sm text-gray-600">Ingat Saya</span>
                         </label>
 
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition duration-150">
+                        <?php if(Route::has('password.request')): ?>
+                            <a href="<?php echo e(route('password.request')); ?>" class="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition duration-150">
                                 Lupa Password?
                             </a>
-                        @endif
+                        <?php endif; ?>
                     </div>
 
-                    {{-- Login Button --}}
+                    
                     <div>
                         <button 
                             type="submit"
@@ -116,7 +173,7 @@
                     </div>
                 </form>
 
-                {{-- Divider --}}
+                
                 <div class="mt-6 pt-6 border-t border-gray-200">
                     <p class="text-center text-xs text-gray-500">
                         Admin panel untuk mengelola konten website
@@ -124,9 +181,9 @@
                 </div>
             </div>
 
-            {{-- Back to Home --}}
+            
             <div class="mt-6 text-center">
-                <a href="{{ route('landing') }}" class="inline-flex items-center text-sm font-medium text-emerald-600 hover:text-emerald-700 transition duration-150">
+                <a href="<?php echo e(route('landing')); ?>" class="inline-flex items-center text-sm font-medium text-emerald-600 hover:text-emerald-700 transition duration-150">
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
@@ -134,10 +191,10 @@
                 </a>
             </div>
 
-            {{-- Footer --}}
+            
             <div class="mt-8 text-center">
                 <p class="text-xs text-gray-500">
-                    &copy; {{ date('Y') }} Bumi Asri Parahyangan. All rights reserved.
+                    &copy; <?php echo e(date('Y')); ?> Bumi Asri Parahyangan. All rights reserved.
                 </p>
             </div>
         </div>
@@ -145,3 +202,4 @@
 
 </body>
 </html>
+<?php /**PATH D:\Project\BumiAsriParahyangan\resources\views/auth/login.blade.php ENDPATH**/ ?>

@@ -205,7 +205,7 @@ window.deleteAdditionalImage = function(button, imagePath) {
     }
     
     if (!unitId) {
-        console.error('Unit ID not found. Form:', form);
+        
         alert('ID unit tidak ditemukan. Silakan refresh halaman dan coba lagi.');
         return;
     }
@@ -239,7 +239,7 @@ window.deleteAdditionalImage = function(button, imagePath) {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
+        
         alert('Gagal menghapus gambar: ' + error.message);
         // Re-enable button on error
         button.disabled = false;
@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 form.submit();
             });
         } catch (err) {
-            console.error('confirm-delete handler error', err);
+            
             // fallback to original behavior
             customConfirm('Hapus unit ini?', { title: 'Konfirmasi Hapus', confirmText: 'Hapus', cancelText: 'Batal' }).then(ok => { if (ok) form.submit(); });
         }
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     const paginationEl = document.getElementById('units-pagination');
                     if (pagination && paginationEl) paginationEl.innerHTML = pagination.innerHTML;
                 })
-                .catch(err => console.error('Live search failed', err));
+                .catch(err => );
         }, 400); // Increased debounce time
 
         searchInput.addEventListener('input', function(e){
@@ -365,7 +365,7 @@ document.addEventListener('DOMContentLoaded', function(){
                             // push state
                             history.pushState({ ajax: true }, '', url);
                         })
-                        .catch(err => console.error('AJAX pagination failed', err));
+                        .catch(err => );
                 };
                 
                 // Use requestIdleCallback if available, otherwise setTimeout
@@ -409,9 +409,9 @@ document.addEventListener('DOMContentLoaded', function(){
                                     table.setAttribute('data-per-page', tableDoc.getAttribute('data-per-page') || '12');
                                     table.setAttribute('data-start', tableDoc.getAttribute('data-start') || '0');
                                 }
-                            } catch (e) { console.error('popstate parse failed', e); }
-                        }).catch(err => console.error('popstate fetch failed', err));
-                } catch (e) { console.error('popstate handler error', e); }
+                            } catch (e) {  }
+                        }).catch(err => );
+                } catch (e) {  }
             });
     }
 
@@ -583,3 +583,4 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 @endpush
+

@@ -247,7 +247,7 @@ function uploadAvatar(input) {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            
             showNotification('Terjadi kesalahan saat upload avatar', 'error');
         });
     }
@@ -274,7 +274,7 @@ function deleteAvatar() {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
+        
         showNotification('Terjadi kesalahan', 'error');
     });
 }
@@ -325,3 +325,4 @@ function showNotification(message, type = 'success') {
 }
 </style>
 @endsection
+

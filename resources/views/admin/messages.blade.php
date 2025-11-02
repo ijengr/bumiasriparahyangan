@@ -221,3 +221,4 @@ document.addEventListener('DOMContentLoaded', function(){
 @endpush
 
 {{-- per-page select styles moved to resources/css/app.css as .admin-perpage-select --}}
+

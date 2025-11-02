@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			initDashboardChart('messagesChart', payload.months || [], payload.counts || [], payload.unreadCounts || []);
 		}
 	} catch(e) {
-		console.error('Dashboard chart init failed', e);
+		// Silent fail
 	}
 
 	try {
@@ -48,5 +48,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			onOpen: () => {},
 			onClose: () => {}
 		});
-	} catch(e) { console.error('GLightbox init failed', e); }
+	} catch(e) { 
+		// Silent fail
+	}
 });
