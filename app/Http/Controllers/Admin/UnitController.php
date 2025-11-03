@@ -229,10 +229,10 @@ class UnitController extends Controller
      */
     public function deleteImage(Request $request, Unit $unit)
     {
-        $imagePath = $request->input('image');
+        $imagePath = $request->input('image_path') ?? $request->input('image');
         
         if (!$imagePath) {
-            return response()->json(['message' => 'Image path required'], 422);
+            return response()->json(['success' => false, 'message' => 'Image path required'], 422);
         }
         
         $images = $unit->images ?? [];
@@ -252,9 +252,9 @@ class UnitController extends Controller
             // Clear homepage cache
             CacheHelper::clearUnitsCache();
             
-            return response()->json(['message' => 'Image deleted successfully']);
+            return response()->json(['success' => true, 'message' => 'Image deleted successfully']);
         }
         
-        return response()->json(['message' => 'Image not found'], 404);
+        return response()->json(['success' => false, 'message' => 'Image not found'], 404);
     }
 }

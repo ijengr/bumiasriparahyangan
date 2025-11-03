@@ -95,9 +95,9 @@
         </div>
 
         {{-- Table with enhanced styling --}}
-    <div class="overflow-x-auto table-responsive">
+        <div class="overflow-x-auto">
             @php $start = ($units->currentPage() - 1) * $units->perPage(); @endphp
-            <table class="min-w-full table-auto" data-current-page="{{ $units->currentPage() }}" data-per-page="{{ $units->perPage() }}" data-start="{{ $start }}">
+            <table class="w-full" data-current-page="{{ $units->currentPage() }}" data-per-page="{{ $units->perPage() }}" data-start="{{ $start }}">
                 <thead class="bg-gradient-to-r from-emerald-50 to-white dark:from-gray-700 dark:to-gray-800 sticky top-0 z-10">
                     <tr class="border-b border-gray-200 dark:border-gray-700">
                         <th class="px-3 md:px-4 py-2 md:py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider w-12 hidden">#</th>
@@ -175,89 +175,57 @@ if (!('requestIdleCallback' in window)) {
     window.requestIdleCallback = (cb, options) => setTimeout(cb, 1);
 }
 
-// Global function for deleting additional images (used in modal forms)
-window.deleteAdditionalImage = function(button, imagePath) {
-    if (!confirm('Hapus gambar ini?')) {
-        return;
-    }
-
-    const container = button.closest('[data-image-path]');
-    const form = button.closest('form');
-    
-    // Try multiple methods to get unit ID
-    let unitId = '';
-    
-    // Method 1: From form data-unit-id attribute
-    if (form && form.hasAttribute('data-unit-id')) {
-        unitId = form.getAttribute('data-unit-id');
-    }
-    
-    // Method 2: From hidden input
-    if (!unitId && form) {
-        const unitIdInput = form.querySelector('input[name="id"]');
-        if (unitIdInput) unitId = unitIdInput.value;
-    }
-    
-    // Method 3: From form action URL
-    if (!unitId && form && form.action) {
-        const match = form.action.match(/\/units\/(\d+)/);
-        if (match) unitId = match[1];
-    }
-    
-    if (!unitId) {
-        
-        alert('ID unit tidak ditemukan. Silakan refresh halaman dan coba lagi.');
-        return;
-    }
-
-    // Disable button to prevent double-click
-    button.disabled = true;
-    button.style.opacity = '0.5';
-
-    fetch(`/admin/units/${unitId}/delete-image`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            image: imagePath
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.message) {
-            container.remove();
-            
-            // Check if there are no more images
-            const grid = document.getElementById('existing-images-grid');
-            if (grid && grid.children.length === 0) {
-                grid.parentElement.remove();
-            }
-        } else {
-            throw new Error(data.error || 'Gagal menghapus gambar');
-        }
-    })
-    .catch(error => {
-        
-        alert('Gagal menghapus gambar: ' + error.message);
-        // Re-enable button on error
-        button.disabled = false;
-        button.style.opacity = '1';
-    });
-};
-
 // Bulk delete handler
 document.addEventListener('DOMContentLoaded', function(){
+    // Select all checkboxes functionality
     const bulkBtn = document.querySelector('[data-bulk-delete]');
-    const checkboxes = Array.from(document.querySelectorAll('input[data-bulk]'));
     const selectAll = document.getElementById('select-all');
 
-    if (selectAll) {
-        selectAll.addEventListener('change', function(){
-            checkboxes.forEach(cb => cb.checked = selectAll.checked);
+    function getAllCheckboxes() {
+        return document.querySelectorAll('input[data-bulk]');
+    }
+
+    function updateSelectAllState() {
+        const checkboxes = getAllCheckboxes();
+        const checkedCount = document.querySelectorAll('input[data-bulk]:checked').length;
+        
+        if (selectAll) {
+            selectAll.checked = checkedCount > 0 && checkedCount === checkboxes.length;
+            selectAll.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+        }
+        
+        // Update row highlighting
+        checkboxes.forEach(function(cb) {
+            const row = cb.closest('tr');
+            if (row) {
+                if (cb.checked) {
+                    row.classList.add('!bg-emerald-100', 'dark:!bg-emerald-900/30');
+                } else {
+                    row.classList.remove('!bg-emerald-100', 'dark:!bg-emerald-900/30');
+                }
+            }
         });
     }
+
+    if (selectAll) {
+        selectAll.addEventListener('change', function() {
+            const checkboxes = getAllCheckboxes();
+            checkboxes.forEach(function(cb) {
+                cb.checked = selectAll.checked;
+            });
+            updateSelectAllState();
+        });
+    }
+    
+    // Listen to individual checkbox changes
+    document.addEventListener('change', function(e) {
+        if (e.target && e.target.hasAttribute('data-bulk')) {
+            updateSelectAllState();
+        }
+    });
+    
+    // Initial state
+    updateSelectAllState();
 
     // Bulk delete is handled centrally in layouts/admin.blade.php to avoid duplicate handlers
 
@@ -318,7 +286,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     const paginationEl = document.getElementById('units-pagination');
                     if (pagination && paginationEl) paginationEl.innerHTML = pagination.innerHTML;
                 })
-                .catch(err => );
+                .catch(function(err) {
+                    console.error('Search error:', err);
+                });
         }, 400); // Increased debounce time
 
         searchInput.addEventListener('input', function(e){
@@ -365,7 +335,9 @@ document.addEventListener('DOMContentLoaded', function(){
                             // push state
                             history.pushState({ ajax: true }, '', url);
                         })
-                        .catch(err => );
+                        .catch(function(err) {
+                            console.error('Pagination error:', err);
+                        });
                 };
                 
                 // Use requestIdleCallback if available, otherwise setTimeout
@@ -409,8 +381,10 @@ document.addEventListener('DOMContentLoaded', function(){
                                     table.setAttribute('data-per-page', tableDoc.getAttribute('data-per-page') || '12');
                                     table.setAttribute('data-start', tableDoc.getAttribute('data-start') || '0');
                                 }
-                            } catch (e) {  }
-                        }).catch(err => );
+                            } catch (e) { console.error('Sort error:', e); }
+                        }).catch(function(err) {
+                            console.error('Sort fetch error:', err);
+                        });
                 } catch (e) {  }
             });
     }

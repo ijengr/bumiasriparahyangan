@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <title>Admin - Bumi Asri Parahyangan</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
     <!-- GLightbox is bundled via Vite (imported in resources/js/app.js) -->
     <style>
         /* Simple tooltip for collapsed sidebar */
@@ -230,9 +230,9 @@
 </head>
 <body id="admin-root" class="min-h-screen bg-gray-50 dark:bg-[#0a0a0a] font-sans text-gray-800 dark:text-[#EDEDEC]">
     <div class="min-h-screen flex">
-        {{-- Modern Sidebar with Emerald/Teal theme & Dark Mode Support --}}
+        
         <aside id="admin-sidebar" class="hidden md:flex flex-col w-64 bg-gradient-to-b from-emerald-700 to-emerald-800 dark:from-emerald-900 dark:to-emerald-950 text-white shadow-2xl transition-all duration-300">
-            {{-- Sidebar Header --}}
+            
             <div class="h-16 flex items-center px-5 border-b border-emerald-600/30 dark:border-emerald-700/50 bg-emerald-800/20 dark:bg-black/20">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-lg bg-white/10 dark:bg-white/5 flex items-center justify-center backdrop-blur-sm">
@@ -252,9 +252,9 @@
                 <button id="mobile-sidebar-close" class="ml-2 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white/10 text-white hover:bg-white/20 md:hidden transition-all" aria-label="Close sidebar" title="Close sidebar">✕</button>
             </div>
 
-            {{-- Navigation Menu --}}
+            
             <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
-                <a href="{{ route('admin.dashboard') }}" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group {{ request()->routeIs('admin.dashboard') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90' }}" data-title="Dashboard">
+                <a href="<?php echo e(route('admin.dashboard')); ?>" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group <?php echo e(request()->routeIs('admin.dashboard') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90'); ?>" data-title="Dashboard">
                     <div class="w-5 h-5 flex items-center justify-center">
                         <svg class="w-5 h-5 text-emerald-100 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
@@ -263,7 +263,7 @@
                     <span class="sidebar-label text-sm">Dashboard</span>
                 </a>
 
-                <a href="{{ route('admin.units.index') }}" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group {{ request()->routeIs('admin.units.*') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90' }}" data-title="Units">
+                <a href="<?php echo e(route('admin.units.index')); ?>" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group <?php echo e(request()->routeIs('admin.units.*') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90'); ?>" data-title="Units">
                     <div class="w-5 h-5 flex items-center justify-center">
                         <svg class="w-5 h-5 text-emerald-100 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
@@ -272,7 +272,7 @@
                     <span class="sidebar-label text-sm">Units</span>
                 </a>
 
-                <a href="{{ route('admin.facilities.index') }}" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group {{ request()->routeIs('admin.facilities.*') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90' }}" data-title="Facilities">
+                <a href="<?php echo e(route('admin.facilities.index')); ?>" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group <?php echo e(request()->routeIs('admin.facilities.*') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90'); ?>" data-title="Facilities">
                     <div class="w-5 h-5 flex items-center justify-center">
                         <svg class="w-5 h-5 text-emerald-100 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
@@ -281,7 +281,7 @@
                     <span class="sidebar-label text-sm">Facilities</span>
                 </a>
 
-                <a href="{{ route('admin.gallery.index') }}" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group {{ request()->routeIs('admin.gallery.*') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90' }}" data-title="Gallery">
+                <a href="<?php echo e(route('admin.gallery.index')); ?>" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group <?php echo e(request()->routeIs('admin.gallery.*') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90'); ?>" data-title="Gallery">
                     <div class="w-5 h-5 flex items-center justify-center">
                         <svg class="w-5 h-5 text-emerald-100 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -290,7 +290,7 @@
                     <span class="sidebar-label text-sm">Gallery</span>
                 </a>
 
-                <a href="{{ route('admin.messages.index') }}" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group {{ request()->routeIs('admin.messages.*') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90' }}" data-title="Messages">
+                <a href="<?php echo e(route('admin.messages.index')); ?>" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group <?php echo e(request()->routeIs('admin.messages.*') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90'); ?>" data-title="Messages">
                     <div class="w-5 h-5 flex items-center justify-center">
                         <svg class="w-5 h-5 text-emerald-100 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
@@ -301,7 +301,7 @@
 
                 <div class="my-3 border-t border-emerald-600/30 dark:border-emerald-700/50"></div>
 
-                <a href="{{ route('admin.settings.index') }}" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group {{ request()->routeIs('admin.settings.*') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90' }}" data-title="Settings">
+                <a href="<?php echo e(route('admin.settings.index')); ?>" class="sidebar-tooltip flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 dark:hover:bg-white/5 transition-all group <?php echo e(request()->routeIs('admin.settings.*') ? 'bg-white/15 dark:bg-white/10 shadow-lg font-semibold' : 'text-white/90'); ?>" data-title="Settings">
                     <div class="w-5 h-5 flex items-center justify-center">
                         <svg class="w-5 h-5 text-emerald-100 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
@@ -312,7 +312,7 @@
                 </a>
             </nav>
 
-            {{-- Sidebar Footer --}}
+            
             <div class="p-4 border-t border-emerald-600/30 dark:border-emerald-700/50 bg-emerald-800/20 dark:bg-black/20">
                 <div class="sidebar-label text-xs text-emerald-200/80 text-center">
                     © 2025 Bumi Asri Parahyangan
@@ -321,11 +321,11 @@
         </aside>
 
         <div class="flex-1 flex flex-col">
-            {{-- Modern Topbar with Emerald Accents & Dark Mode Support --}}
+            
             <header class="sticky top-0 z-40 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm backdrop-blur-md bg-white/95 dark:bg-gray-900/95">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex items-center justify-between h-16">
-                        {{-- Left Section --}}
+                        
                         <div class="flex items-center gap-4">
                             <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -337,73 +337,93 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="text-sm font-semibold text-gray-900 dark:text-gray-100">@yield('page-title', 'Admin Panel')</div>
+                                    <div class="text-sm font-semibold text-gray-900 dark:text-gray-100"><?php echo $__env->yieldContent('page-title', 'Admin Panel'); ?></div>
                                     <div class="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">Bumi Asri Parahyangan</div>
                                 </div>
                             </div>
                         </div>
 
-                        {{-- Right Section --}}
+                        
                         <div class="flex items-center gap-2">
-                            {{-- Sidebar Toggle (Desktop) --}}
+                            
                             <button id="header-sidebar-toggle" class="hidden md:flex p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-400 transition-colors" title="Toggle sidebar">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                             </button>
 
-                            {{-- Back to Site --}}
-                            <a href="{{ route('landing.index') }}" class="hidden sm:flex items-center gap-2 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all">
+                            
+                            <a href="<?php echo e(route('landing.index')); ?>" class="hidden sm:flex items-center gap-2 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                                 </svg>
                                 <span class="hidden lg:inline">Back to Site</span>
                             </a>
 
-                            {{-- Theme Toggle --}}
+                            
                             <button id="theme-toggle" class="p-2.5 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-md hover:shadow-lg transition-all" title="Toggle Dark Mode" aria-pressed="false">
                                 <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1M4.22 4.22l.7.7M18.36 18.36l.7.7M1 12h1m16 0h1M4.22 19.78l.7-.7M18.36 5.64l.7-.7"/>
                                 </svg>
                             </button>
 
-                            {{-- User Dropdown --}}
+                            
                             <div class="relative">
-                                <x-dropdown align="right" width="48">
-                                    <x-slot name="trigger">
+                                <?php if (isset($component)) { $__componentOriginaldf8083d4a852c446488d8d384bbc7cbe = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginaldf8083d4a852c446488d8d384bbc7cbe = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.dropdown','data' => ['align' => 'right','width' => '48']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('dropdown'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['align' => 'right','width' => '48']); ?>
+                                     <?php $__env->slot('trigger', null, []); ?> 
                                         <button class="inline-flex items-center gap-2 px-3 py-2 border border-gray-200 dark:border-gray-700 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all">
-                                            @if(Auth::user()->avatar)
-                                                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-7 h-7 rounded-full object-cover ring-2 ring-emerald-500/20">
-                                            @else
+                                            <?php if(Auth::user()->avatar): ?>
+                                                <img src="<?php echo e(asset('storage/' . Auth::user()->avatar)); ?>" alt="<?php echo e(Auth::user()->name); ?>" class="w-7 h-7 rounded-full object-cover ring-2 ring-emerald-500/20">
+                                            <?php else: ?>
                                                 <div class="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white text-xs font-bold">
-                                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                                    <?php echo e(strtoupper(substr(Auth::user()->name, 0, 1))); ?>
+
                                                 </div>
-                                            @endif
-                                            <span class="hidden sm:inline">{{ Auth::user()->name }}</span>
+                                            <?php endif; ?>
+                                            <span class="hidden sm:inline"><?php echo e(Auth::user()->name); ?></span>
                                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                             </svg>
                                         </button>
-                                    </x-slot>
-                                    <x-slot name="content">
+                                     <?php $__env->endSlot(); ?>
+                                     <?php $__env->slot('content', null, []); ?> 
                                         <!-- User Info Header -->
                                         <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20">
                                             <div class="flex items-center gap-3">
-                                                @if(Auth::user()->avatar)
-                                                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-500/20">
-                                                @else
+                                                <?php if(Auth::user()->avatar): ?>
+                                                    <img src="<?php echo e(asset('storage/' . Auth::user()->avatar)); ?>" alt="<?php echo e(Auth::user()->name); ?>" class="w-10 h-10 rounded-full object-cover ring-2 ring-emerald-500/20">
+                                                <?php else: ?>
                                                     <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold ring-2 ring-emerald-500/20">
-                                                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                                        <?php echo e(strtoupper(substr(Auth::user()->name, 0, 1))); ?>
+
                                                     </div>
-                                                @endif
+                                                <?php endif; ?>
                                                 <div class="flex-1 min-w-0">
-                                                    <p class="text-sm font-bold text-gray-900 dark:text-white truncate">{{ Auth::user()->name }}</p>
-                                                    <p class="text-xs text-gray-600 dark:text-gray-400 truncate">{{ Auth::user()->email }}</p>
+                                                    <p class="text-sm font-bold text-gray-900 dark:text-white truncate"><?php echo e(Auth::user()->name); ?></p>
+                                                    <p class="text-xs text-gray-600 dark:text-gray-400 truncate"><?php echo e(Auth::user()->email); ?></p>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Menu Items -->
                                         <div class="py-1">
-                                            <x-dropdown-link :href="route('admin.profile.edit')">
+                                            <?php if (isset($component)) { $__componentOriginal68cb1971a2b92c9735f83359058f7108 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal68cb1971a2b92c9735f83359058f7108 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.dropdown-link','data' => ['href' => route('admin.profile.edit')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('dropdown-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('admin.profile.edit'))]); ?>
                                                 <div class="flex items-center gap-3">
                                                     <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
                                                         <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -415,14 +435,32 @@
                                                         <div class="text-xs text-gray-500 dark:text-gray-400">Kelola profil Anda</div>
                                                     </div>
                                                 </div>
-                                            </x-dropdown-link>
+                                             <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal68cb1971a2b92c9735f83359058f7108)): ?>
+<?php $attributes = $__attributesOriginal68cb1971a2b92c9735f83359058f7108; ?>
+<?php unset($__attributesOriginal68cb1971a2b92c9735f83359058f7108); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal68cb1971a2b92c9735f83359058f7108)): ?>
+<?php $component = $__componentOriginal68cb1971a2b92c9735f83359058f7108; ?>
+<?php unset($__componentOriginal68cb1971a2b92c9735f83359058f7108); ?>
+<?php endif; ?>
                                         </div>
 
                                         <!-- Logout Section -->
                                         <div class="border-t border-gray-100 dark:border-gray-700 py-1">
-                                            <form method="POST" action="{{ route('logout') }}">
-                                                @csrf
-                                                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="hover:bg-red-50 dark:hover:bg-red-900/20">
+                                            <form method="POST" action="<?php echo e(route('logout')); ?>">
+                                                <?php echo csrf_field(); ?>
+                                                <?php if (isset($component)) { $__componentOriginal68cb1971a2b92c9735f83359058f7108 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal68cb1971a2b92c9735f83359058f7108 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.dropdown-link','data' => ['href' => route('logout'),'onclick' => 'event.preventDefault(); this.closest(\'form\').submit();','class' => 'hover:bg-red-50 dark:hover:bg-red-900/20']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('dropdown-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('logout')),'onclick' => 'event.preventDefault(); this.closest(\'form\').submit();','class' => 'hover:bg-red-50 dark:hover:bg-red-900/20']); ?>
                                                     <div class="flex items-center gap-3">
                                                         <div class="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
                                                             <svg class="w-4 h-4 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -434,11 +472,29 @@
                                                             <div class="text-xs text-gray-500 dark:text-gray-400">Logout dari akun</div>
                                                         </div>
                                                     </div>
-                                                </x-dropdown-link>
+                                                 <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal68cb1971a2b92c9735f83359058f7108)): ?>
+<?php $attributes = $__attributesOriginal68cb1971a2b92c9735f83359058f7108; ?>
+<?php unset($__attributesOriginal68cb1971a2b92c9735f83359058f7108); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal68cb1971a2b92c9735f83359058f7108)): ?>
+<?php $component = $__componentOriginal68cb1971a2b92c9735f83359058f7108; ?>
+<?php unset($__componentOriginal68cb1971a2b92c9735f83359058f7108); ?>
+<?php endif; ?>
                                             </form>
                                         </div>
-                                    </x-slot>
-                                </x-dropdown>
+                                     <?php $__env->endSlot(); ?>
+                                 <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginaldf8083d4a852c446488d8d384bbc7cbe)): ?>
+<?php $attributes = $__attributesOriginaldf8083d4a852c446488d8d384bbc7cbe; ?>
+<?php unset($__attributesOriginaldf8083d4a852c446488d8d384bbc7cbe); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginaldf8083d4a852c446488d8d384bbc7cbe)): ?>
+<?php $component = $__componentOriginaldf8083d4a852c446488d8d384bbc7cbe; ?>
+<?php unset($__componentOriginaldf8083d4a852c446488d8d384bbc7cbe); ?>
+<?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -447,15 +503,15 @@
 
             <main class="p-6">
                 <div class="max-w-7xl mx-auto">
-                    {{-- Breadcrumbs + page actions --}}
+                    
                     <div class="flex items-center justify-between mb-6">
-                        <div class="text-sm text-gray-500">@yield('breadcrumbs')</div>
+                        <div class="text-sm text-gray-500"><?php echo $__env->yieldContent('breadcrumbs'); ?></div>
                         <div>
-                            @yield('page-actions')
+                            <?php echo $__env->yieldContent('page-actions'); ?>
                         </div>
                     </div>
 
-                    @yield('content')
+                    <?php echo $__env->yieldContent('content'); ?>
                 </div>
             </main>
         </div>
@@ -1457,10 +1513,10 @@
         })();
     </script>
     
-    {{-- CompressorJS for client-side image compression --}}
+    
     <script src="https://cdn.jsdelivr.net/npm/compressorjs@1.2.1/dist/compressor.min.js"></script>
     
-    {{-- Custom Confirmation Modal --}}
+    
     <div id="confirmModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[9999] flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all scale-95 opacity-0" id="confirmModalContent">
             <div class="p-6">
@@ -1483,7 +1539,7 @@
         </div>
     </div>
     
-    {{-- Custom Confirmation Script --}}
+    
     <script>
         window.showConfirm = function(message) {
             return new Promise(function(resolve) {
@@ -1519,7 +1575,7 @@
         };
     </script>
     
-    {{-- Global delete single image function --}}
+    
     <script>
         window.deleteSingleImage = function(button) {
             showConfirm('Apakah Anda yakin ingin menghapus gambar ini?').then(function(confirmed) {
@@ -1588,7 +1644,7 @@
         };
     </script>
     
-    {{-- Custom Alert Modal --}}
+    
     <div id="alertModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[9999] flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all scale-95 opacity-0" id="alertModalContent">
             <div class="p-6">
@@ -1606,7 +1662,7 @@
         </div>
     </div>
     
-    {{-- Custom Alert Script --}}
+    
     <script>
         window.showAlert = function(message, type) {
             type = type || 'info';
@@ -1654,8 +1710,9 @@
         };
     </script>
     
-    {{-- Stacked scripts from child views (e.g., @push('scripts')) --}}
-    @stack('scripts')
+    
+    <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>
 
+<?php /**PATH D:\Project\BumiAsriParahyangan\resources\views/layouts/admin.blade.php ENDPATH**/ ?>

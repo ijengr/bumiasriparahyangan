@@ -1,26 +1,26 @@
-@extends('layouts.admin')
 
-@section('page-title', 'Pengaturan')
 
-@section('content')
+<?php $__env->startSection('page-title', 'Pengaturan'); ?>
+
+<?php $__env->startSection('content'); ?>
 <div class="mb-4 md:mb-6">
-    {{-- Success/Error Messages --}}
-    @if(session('status'))
+    
+    <?php if(session('status')): ?>
     <div class="mb-4 bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-700 text-green-700 dark:text-green-300 px-4 py-3 rounded-xl relative" role="alert">
-        <span class="block sm:inline">{{ session('status') }}</span>
+        <span class="block sm:inline"><?php echo e(session('status')); ?></span>
     </div>
-    @endif
+    <?php endif; ?>
 
-    @if($errors->any())
+    <?php if($errors->any()): ?>
     <div class="mb-4 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 px-4 py-3 rounded-xl relative" role="alert">
         <strong class="font-bold">Error!</strong>
         <ul class="mt-2 list-disc list-inside">
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
+            <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <li><?php echo e($error); ?></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
     </div>
-    @endif
+    <?php endif; ?>
 
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
@@ -28,31 +28,31 @@
             <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">Kelola informasi perusahaan yang ditampilkan di website</p>
         </div>
         <div class="flex gap-2">
-            @if($settings->isEmpty())
-                <form action="{{ route('admin.settings.seed') }}" method="POST">
-                    @csrf
+            <?php if($settings->isEmpty()): ?>
+                <form action="<?php echo e(route('admin.settings.seed')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
                     <button type="submit" class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 dark:from-emerald-500 dark:to-teal-500 text-white px-4 py-2 rounded-xl font-bold shadow-lg hover:shadow-xl transition text-sm md:text-base">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
                         <span class="hidden sm:inline">Inisialisasi Pengaturan Default</span>
                         <span class="sm:hidden">Init</span>
                     </button>
                 </form>
-            @else
-                <form action="{{ route('admin.settings.seed') }}" method="POST" onsubmit="event.preventDefault(); showConfirm('Update/tambahkan settings yang belum ada ke database?').then(ok => { if (ok) this.submit(); });">
-                    @csrf
+            <?php else: ?>
+                <form action="<?php echo e(route('admin.settings.seed')); ?>" method="POST" onsubmit="event.preventDefault(); showConfirm('Update/tambahkan settings yang belum ada ke database?').then(ok => { if (ok) this.submit(); });">
+                    <?php echo csrf_field(); ?>
                     <button type="submit" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 dark:from-blue-500 dark:to-indigo-500 text-white px-4 py-2 rounded-xl font-bold shadow-lg hover:shadow-xl transition text-sm md:text-base">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                         <span class="hidden sm:inline">Seed Default Settings</span>
                         <span class="sm:hidden">Seed</span>
                     </button>
                 </form>
-            @endif
+            <?php endif; ?>
         </div>
     </div>
     <div class="mt-3 md:mt-4 h-1 w-20 md:w-24 bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-500 dark:to-teal-400 rounded-full"></div>
 </div>
 
-@if($settings->isEmpty())
+<?php if($settings->isEmpty()): ?>
     <div class="bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 md:p-12 text-center">
         <div class="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg class="w-10 h-10 md:w-12 md:h-12 text-gray-400 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -60,8 +60,8 @@
         <h3 class="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-2">Belum Ada Pengaturan</h3>
         <p class="text-sm md:text-base text-gray-600 dark:text-gray-400 mb-6">Klik tombol di atas untuk membuat pengaturan default.</p>
     </div>
-@else
-    {{-- Tab Navigation --}}
+<?php else: ?>
+    
     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 mb-6 overflow-hidden">
         <div class="flex overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
             <button type="button" data-tab="general" class="settings-tab-btn flex-1 min-w-[140px] px-4 md:px-6 py-3 md:py-4 flex items-center justify-center gap-2 font-semibold text-sm md:text-base transition-all border-b-2 bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-500 dark:to-teal-500 text-white border-emerald-600 dark:border-emerald-500">
@@ -92,25 +92,25 @@
         </div>
     </div>
 
-    <form action="{{ route('admin.settings.update') }}" method="POST" class="space-y-4 md:space-y-6" id="settings-form">
-        @csrf
+    <form action="<?php echo e(route('admin.settings.update')); ?>" method="POST" class="space-y-4 md:space-y-6" id="settings-form">
+        <?php echo csrf_field(); ?>
         
-        {{-- Tab: General Settings --}}
+        
         <div id="tab-general" class="settings-tab-content bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg border border-emerald-100 dark:border-gray-700 overflow-hidden">
-        @if($settings->has('general') && $settings->get('general')->isNotEmpty())
+        <?php if($settings->has('general') && $settings->get('general')->isNotEmpty()): ?>
             <div class="bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-700 dark:to-teal-700 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
                 <h2 class="text-lg md:text-xl font-bold text-white flex items-center gap-2">
                     <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     Informasi Umum
                 </h2>
-                <a href="{{ route('landing.index') }}" target="_blank" class="inline-flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all text-xs md:text-sm font-semibold">
+                <a href="<?php echo e(route('landing.index')); ?>" target="_blank" class="inline-flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all text-xs md:text-sm font-semibold">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                     <span class="hidden sm:inline">Lihat di Homepage</span>
                     <span class="sm:hidden">Preview</span>
                 </a>
             </div>
             <div class="p-4 md:p-6 space-y-4 md:space-y-5">
-                @php
+                <?php
                     // Group settings by category for better organization
                     $generalSettings = collect($settings['general']);
                     
@@ -150,9 +150,9 @@
                         ['id' => 'emptystates', 'title' => 'Status Kosong', 'icon' => 'M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4', 'color' => 'slate', 'keys' => $emptyStates],
                         ['id' => 'unitdetail', 'title' => 'Detail Unit', 'icon' => 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', 'color' => 'sky', 'keys' => $unitDetail],
                     ];
-                @endphp
+                ?>
                 
-                {{-- Search Filter --}}
+                
                 <div class="mb-4">
                     <div class="relative">
                         <input 
@@ -167,57 +167,57 @@
                     <p id="search-result-info" class="hidden text-xs text-gray-500 dark:text-gray-400 mt-2"></p>
                 </div>
                 
-                {{-- Sub Navigation Tabs --}}
+                
                 <div id="sub-tabs-container" class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {{-- HOMEPAGE SECTIONS --}}
+                        
                         <div>
                             <label class="block text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-2">
                                 🏠 Homepage
                             </label>
                             <select onchange="switchSubTab(this.value)" class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">
-                                <option value="company">Info Perusahaan ({{ count($companyInfo ?? []) }})</option>
-                                <option value="hero">Bagian Hero ({{ count($heroSection ?? []) }})</option>
-                                <option value="features">Poin Fitur ({{ count($featurePills ?? []) }})</option>
-                                <option value="community">Kartu Komunitas ({{ count($communityCard ?? []) }})</option>
-                                <option value="featured">Unit Unggulan ({{ count($featuredUnits ?? []) }})</option>
-                                <option value="cta">Bagian CTA ({{ count($ctaSection ?? []) }})</option>
+                                <option value="company">Info Perusahaan (<?php echo e(count($companyInfo ?? [])); ?>)</option>
+                                <option value="hero">Bagian Hero (<?php echo e(count($heroSection ?? [])); ?>)</option>
+                                <option value="features">Poin Fitur (<?php echo e(count($featurePills ?? [])); ?>)</option>
+                                <option value="community">Kartu Komunitas (<?php echo e(count($communityCard ?? [])); ?>)</option>
+                                <option value="featured">Unit Unggulan (<?php echo e(count($featuredUnits ?? [])); ?>)</option>
+                                <option value="cta">Bagian CTA (<?php echo e(count($ctaSection ?? [])); ?>)</option>
                             </select>
                         </div>
                         
-                        {{-- INDIVIDUAL PAGES --}}
+                        
                         <div>
                             <label class="block text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-2">
                                 📄 Halaman
                             </label>
                             <select onchange="switchSubTab(this.value)" class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">
                                 <option value="">Pilih halaman...</option>
-                                <option value="units">Halaman Unit ({{ count($unitsPage ?? []) }})</option>
-                                <option value="unitdetail">Detail Unit ({{ count($unitDetail ?? []) }})</option>
-                                <option value="gallery">Galeri ({{ count($galleryPage ?? []) }})</option>
-                                <option value="facilities">Fasilitas ({{ count($facilitiesPage ?? []) }})</option>
-                                <option value="about">Tentang ({{ count($aboutPage ?? []) }})</option>
-                                <option value="contact">Kontak ({{ count($contactPage ?? []) }})</option>
+                                <option value="units">Halaman Unit (<?php echo e(count($unitsPage ?? [])); ?>)</option>
+                                <option value="unitdetail">Detail Unit (<?php echo e(count($unitDetail ?? [])); ?>)</option>
+                                <option value="gallery">Galeri (<?php echo e(count($galleryPage ?? [])); ?>)</option>
+                                <option value="facilities">Fasilitas (<?php echo e(count($facilitiesPage ?? [])); ?>)</option>
+                                <option value="about">Tentang (<?php echo e(count($aboutPage ?? [])); ?>)</option>
+                                <option value="contact">Kontak (<?php echo e(count($contactPage ?? [])); ?>)</option>
                             </select>
                         </div>
                         
-                        {{-- COMPONENTS & UTILITIES --}}
+                        
                         <div>
                             <label class="block text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-2">
                                 🧩 Komponen
                             </label>
                             <select onchange="switchSubTab(this.value)" class="w-full px-3 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">
                                 <option value="">Pilih komponen...</option>
-                                <option value="buttons">Tombol ({{ count($buttonTexts ?? []) }})</option>
-                                <option value="badges">Lencana ({{ count($badgeTexts ?? []) }})</option>
-                                <option value="unitscta">CTA Unit ({{ count($unitsCTA ?? []) }})</option>
-                                <option value="emptystates">Status Kosong ({{ count($emptyStates ?? []) }})</option>
+                                <option value="buttons">Tombol (<?php echo e(count($buttonTexts ?? [])); ?>)</option>
+                                <option value="badges">Lencana (<?php echo e(count($badgeTexts ?? [])); ?>)</option>
+                                <option value="unitscta">CTA Unit (<?php echo e(count($unitsCTA ?? [])); ?>)</option>
+                                <option value="emptystates">Status Kosong (<?php echo e(count($emptyStates ?? [])); ?>)</option>
                             </select>
                         </div>
                     </div>
                 </div>
 
-                {{-- Company Information --}}
+                
                 <div id="subtab-company" class="subtab-content border-l-4 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 p-4 rounded-r-lg transition-opacity duration-300 opacity-100">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
@@ -239,13 +239,13 @@
                         </ul>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $companySettings = $generalSettings->whereIn('key', $companyInfo)
                                 ->sortBy(function($setting) use ($companyInfo) {
                                     return array_search($setting->key, $companyInfo);
                                 }); 
-                        @endphp
-                        @if($companySettings->isEmpty())
+                        ?>
+                        <?php if($companySettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -255,15 +255,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($companySettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $companySettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Hero Section (Homepage) --}}
+                
                 <div id="subtab-hero" class="subtab-content hidden border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-blue-700 dark:text-blue-300 flex items-center gap-2">
@@ -288,13 +288,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $heroSettings = $generalSettings->whereIn('key', $heroSection)
                                 ->sortBy(function($setting) use ($heroSection) {
                                     return array_search($setting->key, $heroSection);
                                 }); 
-                        @endphp
-                        @if($heroSettings->isEmpty())
+                        ?>
+                        <?php if($heroSettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -304,15 +304,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($heroSettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $heroSettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Feature Pills (Homepage) --}}
+                
                 <div id="subtab-features" class="subtab-content hidden border-l-4 border-purple-500 bg-purple-50 dark:bg-purple-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-purple-700 dark:text-purple-300 flex items-center gap-2">
@@ -347,47 +347,47 @@
                     <div class="grid md:grid-cols-3 gap-4">
                         <div class="space-y-3">
                             <p class="text-xs font-semibold text-purple-600 dark:text-purple-400 uppercase">Feature 1</p>
-                            @php 
+                            <?php 
                                 $feature1Keys = ['feature1_title', 'feature1_subtitle'];
                                 $feature1Settings = $generalSettings->filter(fn($s) => str_starts_with($s->key, 'feature1_'))
                                     ->sortBy(function($setting) use ($feature1Keys) {
                                         return array_search($setting->key, $feature1Keys);
                                     });
-                            @endphp
-                            @foreach($feature1Settings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
+                            ?>
+                            <?php $__currentLoopData = $feature1Settings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                         <div class="space-y-3">
                             <p class="text-xs font-semibold text-purple-600 dark:text-purple-400 uppercase">Feature 2</p>
-                            @php 
+                            <?php 
                                 $feature2Keys = ['feature2_title', 'feature2_subtitle'];
                                 $feature2Settings = $generalSettings->filter(fn($s) => str_starts_with($s->key, 'feature2_'))
                                     ->sortBy(function($setting) use ($feature2Keys) {
                                         return array_search($setting->key, $feature2Keys);
                                     });
-                            @endphp
-                            @foreach($feature2Settings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
+                            ?>
+                            <?php $__currentLoopData = $feature2Settings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                         <div class="space-y-3">
                             <p class="text-xs font-semibold text-purple-600 dark:text-purple-400 uppercase">Feature 3</p>
-                            @php 
+                            <?php 
                                 $feature3Keys = ['feature3_title', 'feature3_subtitle'];
                                 $feature3Settings = $generalSettings->filter(fn($s) => str_starts_with($s->key, 'feature3_'))
                                     ->sortBy(function($setting) use ($feature3Keys) {
                                         return array_search($setting->key, $feature3Keys);
                                     });
-                            @endphp
-                            @foreach($feature3Settings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
+                            ?>
+                            <?php $__currentLoopData = $feature3Settings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                     </div>
                 </div>
 
-                {{-- Community Card (Homepage) --}}
+                
                 <div id="subtab-community" class="subtab-content hidden border-l-4 border-teal-500 bg-teal-50 dark:bg-teal-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-teal-700 dark:text-teal-300 flex items-center gap-2">
@@ -416,13 +416,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $communitySettings = $generalSettings->whereIn('key', $communityCard)
                                 ->sortBy(function($setting) use ($communityCard) {
                                     return array_search($setting->key, $communityCard);
                                 }); 
-                        @endphp
-                        @if($communitySettings->isEmpty())
+                        ?>
+                        <?php if($communitySettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -432,15 +432,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($communitySettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $communitySettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Featured Units Section (Homepage) --}}
+                
                 <div id="subtab-featured" class="subtab-content hidden border-l-4 border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-indigo-700 dark:text-indigo-300 flex items-center gap-2">
@@ -465,13 +465,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $featuredSettings = $generalSettings->whereIn('key', $featuredUnits)
                                 ->sortBy(function($setting) use ($featuredUnits) {
                                     return array_search($setting->key, $featuredUnits);
                                 }); 
-                        @endphp
-                        @if($featuredSettings->isEmpty())
+                        ?>
+                        <?php if($featuredSettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -481,15 +481,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($featuredSettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $featuredSettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Units Page --}}
+                
                 <div id="subtab-units" class="subtab-content hidden border-l-4 border-orange-500 bg-orange-50 dark:bg-orange-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-orange-700 dark:text-orange-300 flex items-center gap-2">
@@ -522,13 +522,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $unitsSettings = $generalSettings->whereIn('key', $unitsPage)
                                 ->sortBy(function($setting) use ($unitsPage) {
                                     return array_search($setting->key, $unitsPage);
                                 }); 
-                        @endphp
-                        @if($unitsSettings->isEmpty())
+                        ?>
+                        <?php if($unitsSettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -538,15 +538,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($unitsSettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $unitsSettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Gallery Page --}}
+                
                 <div id="subtab-gallery" class="subtab-content hidden border-l-4 border-pink-500 bg-pink-50 dark:bg-pink-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-pink-700 dark:text-pink-300 flex items-center gap-2">
@@ -566,13 +566,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $gallerySettings = $generalSettings->whereIn('key', $galleryPage)
                                 ->sortBy(function($setting) use ($galleryPage) {
                                     return array_search($setting->key, $galleryPage);
                                 }); 
-                        @endphp
-                        @if($gallerySettings->isEmpty())
+                        ?>
+                        <?php if($gallerySettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -582,15 +582,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($gallerySettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $gallerySettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Facilities Section --}}
+                
                 <div id="subtab-facilities" class="subtab-content hidden border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-green-700 dark:text-green-300 flex items-center gap-2">
@@ -621,13 +621,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $facilitiesSettings = $generalSettings->whereIn('key', $facilitiesPage)
                                 ->sortBy(function($setting) use ($facilitiesPage) {
                                     return array_search($setting->key, $facilitiesPage);
                                 }); 
-                        @endphp
-                        @if($facilitiesSettings->isEmpty())
+                        ?>
+                        <?php if($facilitiesSettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -637,15 +637,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($facilitiesSettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $facilitiesSettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- About Page --}}
+                
                 <div id="subtab-about" class="subtab-content hidden border-l-4 border-cyan-500 bg-cyan-50 dark:bg-cyan-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-cyan-700 dark:text-cyan-300 flex items-center gap-2">
@@ -661,7 +661,7 @@
                         <p class="font-semibold text-gray-700 dark:text-gray-300 mb-3">📍 About Page - Halaman Tentang Kami</p>
                         
                         <div class="grid grid-cols-2 gap-3">
-                            {{-- Left: Text Content --}}
+                            
                             <div class="space-y-2">
                                 <div class="p-2 bg-cyan-50 dark:bg-cyan-900/30 rounded">
                                     <p class="text-[9px] font-bold text-cyan-700 dark:text-cyan-300 mb-1">Hero & Content</p>
@@ -689,7 +689,7 @@
                                 </div>
                             </div>
                             
-                            {{-- Right: Image --}}
+                            
                             <div class="space-y-2">
                                 <div class="w-full h-24 bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center">
                                     <p class="text-[9px] text-gray-500">🖼️ [About Image]</p>
@@ -703,13 +703,13 @@
                         </p>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $aboutSettings = $generalSettings->whereIn('key', $aboutPage)
                                 ->sortBy(function($setting) use ($aboutPage) {
                                     return array_search($setting->key, $aboutPage);
                                 }); 
-                        @endphp
-                        @if($aboutSettings->isEmpty())
+                        ?>
+                        <?php if($aboutSettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -719,15 +719,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($aboutSettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $aboutSettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- CTA Section --}}
+                
                 <div id="subtab-cta" class="subtab-content hidden border-l-4 border-red-500 bg-red-50 dark:bg-red-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-red-700 dark:text-red-300 flex items-center gap-2">
@@ -748,13 +748,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $ctaSettings = $generalSettings->whereIn('key', $ctaSection)
                                 ->sortBy(function($setting) use ($ctaSection) {
                                     return array_search($setting->key, $ctaSection);
                                 }); 
-                        @endphp
-                        @if($ctaSettings->isEmpty())
+                        ?>
+                        <?php if($ctaSettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -764,15 +764,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($ctaSettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $ctaSettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Contact Page --}}
+                
                 <div id="subtab-contact" class="subtab-content hidden border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-yellow-700 dark:text-yellow-300 flex items-center gap-2">
@@ -795,13 +795,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $contactSettings = $generalSettings->whereIn('key', $contactPage)
                                 ->sortBy(function($setting) use ($contactPage) {
                                     return array_search($setting->key, $contactPage);
                                 }); 
-                        @endphp
-                        @if($contactSettings->isEmpty())
+                        ?>
+                        <?php if($contactSettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -811,15 +811,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($contactSettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $contactSettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Button Texts --}}
+                
                 <div id="subtab-buttons" class="subtab-content hidden border-l-4 border-gray-500 bg-gray-50 dark:bg-gray-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-gray-700 dark:text-gray-300 flex items-center gap-2">
@@ -852,13 +852,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $buttonSettings = $generalSettings->whereIn('key', $buttonTexts)
                                 ->sortBy(function($setting) use ($buttonTexts) {
                                     return array_search($setting->key, $buttonTexts);
                                 }); 
-                        @endphp
-                        @if($buttonSettings->isEmpty())
+                        ?>
+                        <?php if($buttonSettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -868,15 +868,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($buttonSettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $buttonSettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Page Badges --}}
+                
                 <div id="subtab-badges" class="subtab-content hidden border-l-4 border-violet-500 bg-violet-50 dark:bg-violet-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-violet-700 dark:text-violet-300 flex items-center gap-2">
@@ -902,13 +902,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $badgeSettings = $generalSettings->whereIn('key', $badgeTexts)
                                 ->sortBy(function($setting) use ($badgeTexts) {
                                     return array_search($setting->key, $badgeTexts);
                                 }); 
-                        @endphp
-                        @if($badgeSettings->isEmpty())
+                        ?>
+                        <?php if($badgeSettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -918,15 +918,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($badgeSettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $badgeSettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Units CTA --}}
+                
                 <div id="subtab-unitscta" class="subtab-content hidden border-l-4 border-amber-500 bg-amber-50 dark:bg-amber-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-amber-700 dark:text-amber-300 flex items-center gap-2">
@@ -949,13 +949,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $unitsCTASettings = $generalSettings->whereIn('key', $unitsCTA)
                                 ->sortBy(function($setting) use ($unitsCTA) {
                                     return array_search($setting->key, $unitsCTA);
                                 }); 
-                        @endphp
-                        @if($unitsCTASettings->isEmpty())
+                        ?>
+                        <?php if($unitsCTASettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -965,15 +965,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($unitsCTASettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $unitsCTASettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Empty States --}}
+                
                 <div id="subtab-emptystates" class="subtab-content hidden border-l-4 border-slate-500 bg-slate-50 dark:bg-slate-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
@@ -1004,13 +1004,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $emptySettings = $generalSettings->whereIn('key', $emptyStates)
                                 ->sortBy(function($setting) use ($emptyStates) {
                                     return array_search($setting->key, $emptyStates);
                                 }); 
-                        @endphp
-                        @if($emptySettings->isEmpty())
+                        ?>
+                        <?php if($emptySettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -1020,15 +1020,15 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($emptySettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $emptySettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                {{-- Unit Detail --}}
+                
                 <div id="subtab-unitdetail" class="subtab-content hidden border-l-4 border-sky-500 bg-sky-50 dark:bg-sky-900/20 p-4 rounded-r-lg">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <h3 class="text-base md:text-lg font-bold text-sky-700 dark:text-sky-300 flex items-center gap-2">
@@ -1075,13 +1075,13 @@
                         </div>
                     </div>
                     <div class="space-y-4">
-                        @php 
+                        <?php 
                             $unitDetailSettings = $generalSettings->whereIn('key', $unitDetail)
                                 ->sortBy(function($setting) use ($unitDetail) {
                                     return array_search($setting->key, $unitDetail);
                                 }); 
-                        @endphp
-                        @if($unitDetailSettings->isEmpty())
+                        ?>
+                        <?php if($unitDetailSettings->isEmpty()): ?>
                             <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
                                 <div class="flex gap-3">
                                     <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
@@ -1091,40 +1091,40 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
-                            @foreach($unitDetailSettings as $setting)
-                                @include('admin.settings._field', ['setting' => $setting])
-                            @endforeach
-                        @endif
+                        <?php else: ?>
+                            <?php $__currentLoopData = $unitDetailSettings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php echo $__env->make('admin.settings._field', ['setting' => $setting], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
-        @else
+        <?php else: ?>
             <div class="p-8 text-center">
                 <p class="text-gray-500 dark:text-gray-400">
                     Tidak ada pengaturan General. Klik tombol "Seed Default Settings" untuk membuat pengaturan default.
                 </p>
             </div>
-        @endif
+        <?php endif; ?>
         </div>
-        {{-- Tab: SEO & Meta Settings --}}
+        
         <div id="tab-seo" class="settings-tab-content hidden bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg border border-blue-100 dark:border-gray-700 overflow-hidden">
-        @if($settings->has('seo') && $settings->get('seo')->isNotEmpty())
+        <?php if($settings->has('seo') && $settings->get('seo')->isNotEmpty()): ?>
             <div class="bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-700 dark:to-teal-700 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
                 <h2 class="text-lg md:text-xl font-bold text-white flex items-center gap-2">
                     <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     SEO & Meta Tag
                 </h2>
-                <a href="{{ route('landing.index') }}" target="_blank" class="inline-flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all text-xs md:text-sm font-semibold">
+                <a href="<?php echo e(route('landing.index')); ?>" target="_blank" class="inline-flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all text-xs md:text-sm font-semibold">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                     <span class="hidden sm:inline">Lihat di Browser</span>
                     <span class="sm:hidden">Preview</span>
                 </a>
             </div>
             <div class="p-4 md:p-6 space-y-4 md:space-y-5">
-                @php
+                <?php
                     $seoSettings = collect($settings['seo'] ?? [])->keyBy('key');
-                @endphp
+                ?>
                 
                 <div>
                     <label for="meta_title" class="block text-xs md:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
@@ -1134,7 +1134,7 @@
                         type="text" 
                         name="settings[meta_title]" 
                         id="meta_title"
-                        value="{{ old('settings.meta_title', $seoSettings['meta_title']->value ?? '') }}"
+                        value="<?php echo e(old('settings.meta_title', $seoSettings['meta_title']->value ?? '')); ?>"
                         placeholder="Bumi Asri Parahyangan - Property Terbaik di Bandung"
                         class="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-900/50 transition-all text-sm md:text-base"
                     >
@@ -1151,7 +1151,7 @@
                         rows="3"
                         placeholder="Deskripsi singkat tentang website Anda untuk search engine"
                         class="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-900/50 transition-all text-sm md:text-base"
-                    >{{ old('settings.meta_description', $seoSettings['meta_description']->value ?? '') }}</textarea>
+                    ><?php echo e(old('settings.meta_description', $seoSettings['meta_description']->value ?? '')); ?></textarea>
                     <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Maks. 160 karakter untuk hasil optimal di Google</p>
                 </div>
 
@@ -1163,7 +1163,7 @@
                         type="text" 
                         name="settings[meta_keywords]" 
                         id="meta_keywords"
-                        value="{{ old('settings.meta_keywords', $seoSettings['meta_keywords']->value ?? '') }}"
+                        value="<?php echo e(old('settings.meta_keywords', $seoSettings['meta_keywords']->value ?? '')); ?>"
                         placeholder="property, rumah, bandung, jual rumah"
                         class="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-900/50 transition-all text-sm md:text-base"
                     >
@@ -1175,13 +1175,13 @@
                         Favicon (Icon Browser)
                     </label>
                     <div class="space-y-3">
-                        @php
+                        <?php
                             $faviconValue = old('settings.favicon', $seoSettings['favicon']->value ?? '/images/favicon.ico');
                             $faviconUrl = asset($faviconValue);
-                        @endphp
+                        ?>
                         <div class="flex items-center gap-4">
                             <div class="w-16 h-16 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 flex items-center justify-center p-2">
-                                <img id="favicon-preview" src="{{ $faviconUrl }}" alt="Favicon Preview" class="max-w-full max-h-full object-contain" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 24 24%22 stroke=%22%23999%22%3E%3Cpath stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%222%22 d=%22M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z%22/%3E%3C/svg%3E'">
+                                <img id="favicon-preview" src="<?php echo e($faviconUrl); ?>" alt="Favicon Preview" class="max-w-full max-h-full object-contain" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 24 24%22 stroke=%22%23999%22%3E%3Cpath stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%222%22 d=%22M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z%22/%3E%3C/svg%3E'">
                             </div>
                             <div class="flex-1">
                                 <input 
@@ -1199,7 +1199,7 @@
                                         dark:file:bg-emerald-900/30 dark:file:text-emerald-400
                                         cursor-pointer"
                                 >
-                                <input type="hidden" name="settings[favicon]" id="favicon" value="{{ $faviconValue }}">
+                                <input type="hidden" name="settings[favicon]" id="favicon" value="<?php echo e($faviconValue); ?>">
                             </div>
                         </div>
                     </div>
@@ -1215,12 +1215,12 @@
                             type="color" 
                             name="settings[theme_color]" 
                             id="theme_color"
-                            value="{{ old('settings.theme_color', $seoSettings['theme_color']->value ?? '#10b981') }}"
+                            value="<?php echo e(old('settings.theme_color', $seoSettings['theme_color']->value ?? '#10b981')); ?>"
                             class="h-12 w-16 border border-gray-200 dark:border-gray-600 rounded-xl cursor-pointer"
                         >
                         <input 
                             type="text" 
-                            value="{{ old('settings.theme_color', $seoSettings['theme_color']->value ?? '#10b981') }}"
+                            value="<?php echo e(old('settings.theme_color', $seoSettings['theme_color']->value ?? '#10b981')); ?>"
                             readonly
                             class="flex-1 px-3 md:px-4 py-2 md:py-3 border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700/50 text-gray-900 dark:text-white rounded-xl text-sm md:text-base font-mono"
                         >
@@ -1233,13 +1233,13 @@
                         Open Graph Image (Gambar Preview Saat Share)
                     </label>
                     <div class="space-y-3">
-                        @php
+                        <?php
                             $ogImageValue = old('settings.og_image', $seoSettings['og_image']->value ?? '');
                             $ogImageUrl = !empty($ogImageValue) ? asset($ogImageValue) : 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 24 24%22 stroke=%22%23999%22%3E%3Cpath stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%222%22 d=%22M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z%22/%3E%3C/svg%3E';
-                        @endphp
+                        ?>
                         <div class="flex items-start gap-4">
                             <div class="w-32 h-20 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 flex items-center justify-center p-2">
-                                <img id="og-image-preview" src="{{ $ogImageUrl }}" alt="OG Image Preview" class="max-w-full max-h-full object-contain" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 24 24%22 stroke=%22%23999%22%3E%3Cpath stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%222%22 d=%22M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z%22/%3E%3C/svg%3E'">
+                                <img id="og-image-preview" src="<?php echo e($ogImageUrl); ?>" alt="OG Image Preview" class="max-w-full max-h-full object-contain" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 fill=%22none%22 viewBox=%220 0 24 24%22 stroke=%22%23999%22%3E%3Cpath stroke-linecap=%22round%22 stroke-linejoin=%22round%22 stroke-width=%222%22 d=%22M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z%22/%3E%3C/svg%3E'">
                             </div>
                             <div class="flex-1">
                                 <input 
@@ -1257,39 +1257,39 @@
                                         dark:file:bg-emerald-900/30 dark:file:text-emerald-400
                                         cursor-pointer"
                                 >
-                                <input type="hidden" name="settings[og_image]" id="og_image" value="{{ $ogImageValue }}">
+                                <input type="hidden" name="settings[og_image]" id="og_image" value="<?php echo e($ogImageValue); ?>">
                             </div>
                         </div>
                     </div>
                     <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Ukuran ideal: 1200x630 px untuk Facebook & WhatsApp</p>
                 </div>
             </div>
-        @else
+        <?php else: ?>
             <div class="p-8 text-center">
                 <p class="text-gray-500 dark:text-gray-400">Tidak ada pengaturan SEO. Klik tombol "Seed Default Settings" untuk membuat pengaturan default.</p>
             </div>
-        @endif
+        <?php endif; ?>
         </div>
 
-        {{-- Tab: Contact Settings --}}
+        
         <div id="tab-contact" class="settings-tab-content hidden bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg border border-blue-100 dark:border-gray-700 overflow-hidden">
-        @if($settings->has('contact') && $settings->get('contact')->isNotEmpty())
+        <?php if($settings->has('contact') && $settings->get('contact')->isNotEmpty()): ?>
             <div class="bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-700 dark:to-teal-700 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
                 <h2 class="text-lg md:text-xl font-bold text-white flex items-center gap-2">
                     <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     Informasi Kontak
                 </h2>
-                <a href="{{ route('landing.contact') }}" target="_blank" class="inline-flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all text-xs md:text-sm font-semibold">
+                <a href="<?php echo e(route('landing.contact')); ?>" target="_blank" class="inline-flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all text-xs md:text-sm font-semibold">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                     <span class="hidden sm:inline">Lihat di Halaman Kontak</span>
                     <span class="sm:hidden">Preview</span>
                 </a>
             </div>
             <div class="p-4 md:p-6 space-y-4 md:space-y-5">
-                @foreach($settings['contact'] as $setting)
+                <?php $__currentLoopData = $settings['contact']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div>
-                        <label for="{{ $setting->key }}" class="block text-xs md:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                            @php
+                        <label for="<?php echo e($setting->key); ?>" class="block text-xs md:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                            <?php
                                 $contactLabels = [
                                     'contact_address' => 'Alamat',
                                     'contact_phone' => 'Telepon',
@@ -1301,96 +1301,97 @@
                                     'operating_hours_sunday' => 'Jam Operasional Minggu',
                                 ];
                                 echo $contactLabels[$setting->key] ?? ucwords(str_replace('_', ' ', $setting->key));
-                            @endphp
+                            ?>
                         </label>
-                        @if($setting->type === 'textarea')
+                        <?php if($setting->type === 'textarea'): ?>
                             <textarea 
-                                name="settings[{{ $setting->key }}]" 
-                                id="{{ $setting->key }}"
+                                name="settings[<?php echo e($setting->key); ?>]" 
+                                id="<?php echo e($setting->key); ?>"
                                 rows="2"
                                 class="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-900/50 transition-all text-sm md:text-base"
-                            >{{ old('settings.'.$setting->key, $setting->value) }}</textarea>
-                        @else
+                            ><?php echo e(old('settings.'.$setting->key, $setting->value)); ?></textarea>
+                        <?php else: ?>
                             <input 
-                                type="{{ $setting->type }}" 
-                                name="settings[{{ $setting->key }}]" 
-                                id="{{ $setting->key }}"
-                                value="{{ old('settings.'.$setting->key, $setting->value) }}"
+                                type="<?php echo e($setting->type); ?>" 
+                                name="settings[<?php echo e($setting->key); ?>]" 
+                                id="<?php echo e($setting->key); ?>"
+                                value="<?php echo e(old('settings.'.$setting->key, $setting->value)); ?>"
                                 class="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-900/50 transition-all text-sm md:text-base"
                             >
-                        @endif
+                        <?php endif; ?>
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
-        @else
+        <?php else: ?>
             <div class="p-8 text-center">
                 <p class="text-gray-500 dark:text-gray-400">
                     Tidak ada pengaturan Contact. Klik tombol "Seed Default Settings" untuk membuat pengaturan default.
                 </p>
             </div>
-        @endif
+        <?php endif; ?>
         </div>
 
-        {{-- Tab: Social Media Settings --}}
+        
         <div id="tab-social" class="settings-tab-content hidden bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg border border-purple-100 dark:border-gray-700 overflow-hidden">
-        @if($settings->has('social') && $settings->get('social')->isNotEmpty())
+        <?php if($settings->has('social') && $settings->get('social')->isNotEmpty()): ?>
             <div class="bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-700 dark:to-teal-700 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
                 <h2 class="text-lg md:text-xl font-bold text-white flex items-center gap-2">
                     <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                     Media Sosial
                 </h2>
-                <a href="{{ route('landing.index') }}#footer" target="_blank" class="inline-flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all text-xs md:text-sm font-semibold">
+                <a href="<?php echo e(route('landing.index')); ?>#footer" target="_blank" class="inline-flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all text-xs md:text-sm font-semibold">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                     <span class="hidden sm:inline">Lihat di Footer</span>
                     <span class="sm:hidden">Preview</span>
                 </a>
             </div>
             <div class="p-4 md:p-6 space-y-4 md:space-y-5">
-                @foreach($settings['social'] as $setting)
+                <?php $__currentLoopData = $settings['social']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div>
-                        <label for="{{ $setting->key }}" class="flex items-center gap-2 text-xs md:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                            @php
+                        <label for="<?php echo e($setting->key); ?>" class="flex items-center gap-2 text-xs md:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                            <?php
                                 $platform = str_replace('social_', '', $setting->key);
-                            @endphp
-                            @if($platform === 'facebook')
+                            ?>
+                            <?php if($platform === 'facebook'): ?>
                                 <svg class="w-4 h-4 md:w-5 md:h-5 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                            @elseif($platform === 'instagram')
+                            <?php elseif($platform === 'instagram'): ?>
                                 <svg class="w-4 h-4 md:w-5 md:h-5 text-pink-600 dark:text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                            @elseif($platform === 'whatsapp')
+                            <?php elseif($platform === 'whatsapp'): ?>
                                 <svg class="w-4 h-4 md:w-5 md:h-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                            @elseif($platform === 'twitter')
+                            <?php elseif($platform === 'twitter'): ?>
                                 <svg class="w-4 h-4 md:w-5 md:h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-                            @endif
-                            {{ ucwords($platform) }}
+                            <?php endif; ?>
+                            <?php echo e(ucwords($platform)); ?>
+
                         </label>
                         <input 
-                            type="{{ $setting->type }}" 
-                            name="settings[{{ $setting->key }}]" 
-                            id="{{ $setting->key }}"
-                            value="{{ old('settings.'.$setting->key, $setting->value) }}"
+                            type="<?php echo e($setting->type); ?>" 
+                            name="settings[<?php echo e($setting->key); ?>]" 
+                            id="<?php echo e($setting->key); ?>"
+                            value="<?php echo e(old('settings.'.$setting->key, $setting->value)); ?>"
                             placeholder="https://..."
                             class="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 dark:focus:ring-emerald-900/50 transition-all text-sm md:text-base"
                         >
                     </div>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
-        @else
+        <?php else: ?>
             <div class="p-8 text-center">
                 <p class="text-gray-500 dark:text-gray-400">
                     Tidak ada pengaturan Social Media. Klik tombol "Seed Default Settings" untuk membuat pengaturan default.
                 </p>
             </div>
-        @endif
+        <?php endif; ?>
         </div>
 
-        {{-- Tab: Theme Settings --}}
+        
         <div id="tab-theme" class="settings-tab-content hidden bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl shadow-lg border border-purple-100 dark:border-gray-700 overflow-hidden">
             <div class="bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-700 dark:to-pink-700 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
                 <h2 class="text-lg md:text-xl font-bold text-white flex items-center gap-2">
                     <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
                     Tema & Warna
                 </h2>
-                <a href="{{ route('landing.index') }}" target="_blank" class="inline-flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all text-xs md:text-sm font-semibold">
+                <a href="<?php echo e(route('landing.index')); ?>" target="_blank" class="inline-flex items-center gap-1 md:gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition-all text-xs md:text-sm font-semibold">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                     <span class="hidden sm:inline">Lihat Website</span>
                     <span class="sm:hidden">Preview</span>
@@ -1398,37 +1399,37 @@
             </div>
             
             <div class="p-4 md:p-6 space-y-6">
-                {{-- Live Preview Section --}}
+                
                 <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 border-2 border-dashed border-gray-300 dark:border-gray-600">
                     <h3 class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-4 flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         Live Preview
                     </h3>
                     <div id="theme-preview" class="space-y-3">
-                        <div id="preview-primary" class="px-4 py-3 rounded-lg text-white font-semibold shadow-md" style="background-color: {{ old('settings.theme_primary_color', theme('primary')) }}">
+                        <div id="preview-primary" class="px-4 py-3 rounded-lg text-white font-semibold shadow-md" style="background-color: <?php echo e(old('settings.theme_primary_color', theme('primary'))); ?>">
                             Primary Color
                         </div>
-                        <div id="preview-secondary" class="px-4 py-3 rounded-lg text-white font-semibold shadow-md" style="background-color: {{ old('settings.theme_secondary_color', theme('secondary')) }}">
+                        <div id="preview-secondary" class="px-4 py-3 rounded-lg text-white font-semibold shadow-md" style="background-color: <?php echo e(old('settings.theme_secondary_color', theme('secondary'))); ?>">
                             Secondary Color
                         </div>
-                        <div id="preview-accent" class="px-4 py-3 rounded-lg text-white font-semibold shadow-md" style="background-color: {{ old('settings.theme_accent_color', theme('accent')) }}">
+                        <div id="preview-accent" class="px-4 py-3 rounded-lg text-white font-semibold shadow-md" style="background-color: <?php echo e(old('settings.theme_accent_color', theme('accent'))); ?>">
                             Accent Color
                         </div>
                         <div class="flex gap-2">
-                            <div id="preview-success" class="flex-1 px-3 py-2 rounded-lg text-white text-sm font-semibold" style="background-color: {{ old('settings.theme_success_color', theme('success')) }}">Success</div>
-                            <div id="preview-warning" class="flex-1 px-3 py-2 rounded-lg text-white text-sm font-semibold" style="background-color: {{ old('settings.theme_warning_color', theme('warning')) }}">Warning</div>
-                            <div id="preview-danger" class="flex-1 px-3 py-2 rounded-lg text-white text-sm font-semibold" style="background-color: {{ old('settings.theme_danger_color', theme('danger')) }}">Danger</div>
+                            <div id="preview-success" class="flex-1 px-3 py-2 rounded-lg text-white text-sm font-semibold" style="background-color: <?php echo e(old('settings.theme_success_color', theme('success'))); ?>">Success</div>
+                            <div id="preview-warning" class="flex-1 px-3 py-2 rounded-lg text-white text-sm font-semibold" style="background-color: <?php echo e(old('settings.theme_warning_color', theme('warning'))); ?>">Warning</div>
+                            <div id="preview-danger" class="flex-1 px-3 py-2 rounded-lg text-white text-sm font-semibold" style="background-color: <?php echo e(old('settings.theme_danger_color', theme('danger'))); ?>">Danger</div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Color Pickers Grid --}}
+                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {{-- Primary Color --}}
+                    
                     <div>
                         <label for="theme_primary_color" class="flex items-center justify-between text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             <span class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full" style="background-color: {{ old('settings.theme_primary_color', $settings->get('theme')->firstWhere('key', 'theme_primary_color')->value ?? '#059669') }}"></div>
+                                <div class="w-4 h-4 rounded-full" style="background-color: <?php echo e(old('settings.theme_primary_color', $settings->get('theme')->firstWhere('key', 'theme_primary_color')->value ?? '#059669')); ?>"></div>
                                 Primary Color
                             </span>
                             <button type="button" onclick="copyColor('theme_primary_color')" class="text-xs text-gray-500 hover:text-emerald-600 transition-colors">
@@ -1436,16 +1437,16 @@
                             </button>
                         </label>
                         <input type="color" name="settings[theme_primary_color]" id="theme_primary_color"
-                            value="{{ old('settings.theme_primary_color', $settings->get('theme')->firstWhere('key', 'theme_primary_color')->value ?? '#059669') }}"
+                            value="<?php echo e(old('settings.theme_primary_color', $settings->get('theme')->firstWhere('key', 'theme_primary_color')->value ?? '#059669')); ?>"
                             onchange="updateThemePreview('primary', this.value)"
                             class="w-full h-12 rounded-lg cursor-pointer border-2 border-gray-300 dark:border-gray-600">
                     </div>
 
-                    {{-- Secondary Color --}}
+                    
                     <div>
                         <label for="theme_secondary_color" class="flex items-center justify-between text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             <span class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full" style="background-color: {{ old('settings.theme_secondary_color', $settings->get('theme')->firstWhere('key', 'theme_secondary_color')->value ?? '#0d9488') }}"></div>
+                                <div class="w-4 h-4 rounded-full" style="background-color: <?php echo e(old('settings.theme_secondary_color', $settings->get('theme')->firstWhere('key', 'theme_secondary_color')->value ?? '#0d9488')); ?>"></div>
                                 Secondary Color
                             </span>
                             <button type="button" onclick="copyColor('theme_secondary_color')" class="text-xs text-gray-500 hover:text-emerald-600 transition-colors">
@@ -1453,16 +1454,16 @@
                             </button>
                         </label>
                         <input type="color" name="settings[theme_secondary_color]" id="theme_secondary_color"
-                            value="{{ old('settings.theme_secondary_color', $settings->get('theme')->firstWhere('key', 'theme_secondary_color')->value ?? '#0d9488') }}"
+                            value="<?php echo e(old('settings.theme_secondary_color', $settings->get('theme')->firstWhere('key', 'theme_secondary_color')->value ?? '#0d9488')); ?>"
                             onchange="updateThemePreview('secondary', this.value)"
                             class="w-full h-12 rounded-lg cursor-pointer border-2 border-gray-300 dark:border-gray-600">
                     </div>
 
-                    {{-- Accent Color --}}
+                    
                     <div>
                         <label for="theme_accent_color" class="flex items-center justify-between text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             <span class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full" style="background-color: {{ old('settings.theme_accent_color', $settings->get('theme')->firstWhere('key', 'theme_accent_color')->value ?? '#3b82f6') }}"></div>
+                                <div class="w-4 h-4 rounded-full" style="background-color: <?php echo e(old('settings.theme_accent_color', $settings->get('theme')->firstWhere('key', 'theme_accent_color')->value ?? '#3b82f6')); ?>"></div>
                                 Accent Color
                             </span>
                             <button type="button" onclick="copyColor('theme_accent_color')" class="text-xs text-gray-500 hover:text-emerald-600 transition-colors">
@@ -1470,16 +1471,16 @@
                             </button>
                         </label>
                         <input type="color" name="settings[theme_accent_color]" id="theme_accent_color"
-                            value="{{ old('settings.theme_accent_color', $settings->get('theme')->firstWhere('key', 'theme_accent_color')->value ?? '#3b82f6') }}"
+                            value="<?php echo e(old('settings.theme_accent_color', $settings->get('theme')->firstWhere('key', 'theme_accent_color')->value ?? '#3b82f6')); ?>"
                             onchange="updateThemePreview('accent', this.value)"
                             class="w-full h-12 rounded-lg cursor-pointer border-2 border-gray-300 dark:border-gray-600">
                     </div>
 
-                    {{-- Success Color --}}
+                    
                     <div>
                         <label for="theme_success_color" class="flex items-center justify-between text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             <span class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full" style="background-color: {{ old('settings.theme_success_color', $settings->get('theme')->firstWhere('key', 'theme_success_color')->value ?? '#10b981') }}"></div>
+                                <div class="w-4 h-4 rounded-full" style="background-color: <?php echo e(old('settings.theme_success_color', $settings->get('theme')->firstWhere('key', 'theme_success_color')->value ?? '#10b981')); ?>"></div>
                                 Success Color
                             </span>
                             <button type="button" onclick="copyColor('theme_success_color')" class="text-xs text-gray-500 hover:text-emerald-600 transition-colors">
@@ -1487,16 +1488,16 @@
                             </button>
                         </label>
                         <input type="color" name="settings[theme_success_color]" id="theme_success_color"
-                            value="{{ old('settings.theme_success_color', $settings->get('theme')->firstWhere('key', 'theme_success_color')->value ?? '#10b981') }}"
+                            value="<?php echo e(old('settings.theme_success_color', $settings->get('theme')->firstWhere('key', 'theme_success_color')->value ?? '#10b981')); ?>"
                             onchange="updateThemePreview('success', this.value)"
                             class="w-full h-12 rounded-lg cursor-pointer border-2 border-gray-300 dark:border-gray-600">
                     </div>
 
-                    {{-- Warning Color --}}
+                    
                     <div>
                         <label for="theme_warning_color" class="flex items-center justify-between text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             <span class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full" style="background-color: {{ old('settings.theme_warning_color', $settings->get('theme')->firstWhere('key', 'theme_warning_color')->value ?? '#f59e0b') }}"></div>
+                                <div class="w-4 h-4 rounded-full" style="background-color: <?php echo e(old('settings.theme_warning_color', $settings->get('theme')->firstWhere('key', 'theme_warning_color')->value ?? '#f59e0b')); ?>"></div>
                                 Warning Color
                             </span>
                             <button type="button" onclick="copyColor('theme_warning_color')" class="text-xs text-gray-500 hover:text-emerald-600 transition-colors">
@@ -1504,16 +1505,16 @@
                             </button>
                         </label>
                         <input type="color" name="settings[theme_warning_color]" id="theme_warning_color"
-                            value="{{ old('settings.theme_warning_color', $settings->get('theme')->firstWhere('key', 'theme_warning_color')->value ?? '#f59e0b') }}"
+                            value="<?php echo e(old('settings.theme_warning_color', $settings->get('theme')->firstWhere('key', 'theme_warning_color')->value ?? '#f59e0b')); ?>"
                             onchange="updateThemePreview('warning', this.value)"
                             class="w-full h-12 rounded-lg cursor-pointer border-2 border-gray-300 dark:border-gray-600">
                     </div>
 
-                    {{-- Danger Color --}}
+                    
                     <div>
                         <label for="theme_danger_color" class="flex items-center justify-between text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             <span class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full" style="background-color: {{ old('settings.theme_danger_color', $settings->get('theme')->firstWhere('key', 'theme_danger_color')->value ?? '#ef4444') }}"></div>
+                                <div class="w-4 h-4 rounded-full" style="background-color: <?php echo e(old('settings.theme_danger_color', $settings->get('theme')->firstWhere('key', 'theme_danger_color')->value ?? '#ef4444')); ?>"></div>
                                 Danger Color
                             </span>
                             <button type="button" onclick="copyColor('theme_danger_color')" class="text-xs text-gray-500 hover:text-emerald-600 transition-colors">
@@ -1521,16 +1522,16 @@
                             </button>
                         </label>
                         <input type="color" name="settings[theme_danger_color]" id="theme_danger_color"
-                            value="{{ old('settings.theme_danger_color', $settings->get('theme')->firstWhere('key', 'theme_danger_color')->value ?? '#ef4444') }}"
+                            value="<?php echo e(old('settings.theme_danger_color', $settings->get('theme')->firstWhere('key', 'theme_danger_color')->value ?? '#ef4444')); ?>"
                             onchange="updateThemePreview('danger', this.value)"
                             class="w-full h-12 rounded-lg cursor-pointer border-2 border-gray-300 dark:border-gray-600">
                     </div>
 
-                    {{-- Text Color --}}
+                    
                     <div>
                         <label for="theme_text_color" class="flex items-center justify-between text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             <span class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full border border-gray-300" style="background-color: {{ old('settings.theme_text_color', $settings->get('theme')->firstWhere('key', 'theme_text_color')->value ?? '#1f2937') }}"></div>
+                                <div class="w-4 h-4 rounded-full border border-gray-300" style="background-color: <?php echo e(old('settings.theme_text_color', $settings->get('theme')->firstWhere('key', 'theme_text_color')->value ?? '#1f2937')); ?>"></div>
                                 Text Color
                             </span>
                             <button type="button" onclick="copyColor('theme_text_color')" class="text-xs text-gray-500 hover:text-emerald-600 transition-colors">
@@ -1538,15 +1539,15 @@
                             </button>
                         </label>
                         <input type="color" name="settings[theme_text_color]" id="theme_text_color"
-                            value="{{ old('settings.theme_text_color', $settings->get('theme')->firstWhere('key', 'theme_text_color')->value ?? '#1f2937') }}"
+                            value="<?php echo e(old('settings.theme_text_color', $settings->get('theme')->firstWhere('key', 'theme_text_color')->value ?? '#1f2937')); ?>"
                             class="w-full h-12 rounded-lg cursor-pointer border-2 border-gray-300 dark:border-gray-600">
                     </div>
 
-                    {{-- Background Color --}}
+                    
                     <div>
                         <label for="theme_background_color" class="flex items-center justify-between text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             <span class="flex items-center gap-2">
-                                <div class="w-4 h-4 rounded-full border border-gray-300" style="background-color: {{ old('settings.theme_background_color', $settings->get('theme')->firstWhere('key', 'theme_background_color')->value ?? '#ffffff') }}"></div>
+                                <div class="w-4 h-4 rounded-full border border-gray-300" style="background-color: <?php echo e(old('settings.theme_background_color', $settings->get('theme')->firstWhere('key', 'theme_background_color')->value ?? '#ffffff')); ?>"></div>
                                 Background Color
                             </span>
                             <button type="button" onclick="copyColor('theme_background_color')" class="text-xs text-gray-500 hover:text-emerald-600 transition-colors">
@@ -1554,29 +1555,29 @@
                             </button>
                         </label>
                         <input type="color" name="settings[theme_background_color]" id="theme_background_color"
-                            value="{{ old('settings.theme_background_color', $settings->get('theme')->firstWhere('key', 'theme_background_color')->value ?? '#ffffff') }}"
+                            value="<?php echo e(old('settings.theme_background_color', $settings->get('theme')->firstWhere('key', 'theme_background_color')->value ?? '#ffffff')); ?>"
                             class="w-full h-12 rounded-lg cursor-pointer border-2 border-gray-300 dark:border-gray-600">
                     </div>
                 </div>
 
-                {{-- Border Radius Setting --}}
+                
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 rounded-xl p-4 border border-blue-200 dark:border-gray-600">
                     <label for="theme_border_radius" class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 block">
-                        Border Radius: <span id="radius-value" class="text-blue-600 dark:text-blue-400 font-bold">{{ old('settings.theme_border_radius', $settings->get('theme')->firstWhere('key', 'theme_border_radius')->value ?? '16') }}px</span>
+                        Border Radius: <span id="radius-value" class="text-blue-600 dark:text-blue-400 font-bold"><?php echo e(old('settings.theme_border_radius', $settings->get('theme')->firstWhere('key', 'theme_border_radius')->value ?? '16')); ?>px</span>
                     </label>
                     <input type="range" name="settings[theme_border_radius]" id="theme_border_radius"
                         min="0" max="32" step="2"
-                        value="{{ old('settings.theme_border_radius', $settings->get('theme')->firstWhere('key', 'theme_border_radius')->value ?? '16') }}"
+                        value="<?php echo e(old('settings.theme_border_radius', $settings->get('theme')->firstWhere('key', 'theme_border_radius')->value ?? '16')); ?>"
                         oninput="updateRadiusPreview(this.value)"
                         class="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
                     <div class="flex justify-between mt-4 gap-2">
-                        <div id="radius-demo-1" class="flex-1 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 shadow-md transition-all duration-300" style="border-radius: {{ old('settings.theme_border_radius', $settings->get('theme')->firstWhere('key', 'theme_border_radius')->value ?? '16') }}px"></div>
-                        <div id="radius-demo-2" class="flex-1 h-12 bg-gradient-to-r from-blue-500 to-purple-500 shadow-md transition-all duration-300" style="border-radius: {{ old('settings.theme_border_radius', $settings->get('theme')->firstWhere('key', 'theme_border_radius')->value ?? '16') }}px"></div>
-                        <div id="radius-demo-3" class="flex-1 h-12 bg-gradient-to-r from-pink-500 to-rose-500 shadow-md transition-all duration-300" style="border-radius: {{ old('settings.theme_border_radius', $settings->get('theme')->firstWhere('key', 'theme_border_radius')->value ?? '16') }}px"></div>
+                        <div id="radius-demo-1" class="flex-1 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 shadow-md transition-all duration-300" style="border-radius: <?php echo e(old('settings.theme_border_radius', $settings->get('theme')->firstWhere('key', 'theme_border_radius')->value ?? '16')); ?>px"></div>
+                        <div id="radius-demo-2" class="flex-1 h-12 bg-gradient-to-r from-blue-500 to-purple-500 shadow-md transition-all duration-300" style="border-radius: <?php echo e(old('settings.theme_border_radius', $settings->get('theme')->firstWhere('key', 'theme_border_radius')->value ?? '16')); ?>px"></div>
+                        <div id="radius-demo-3" class="flex-1 h-12 bg-gradient-to-r from-pink-500 to-rose-500 shadow-md transition-all duration-300" style="border-radius: <?php echo e(old('settings.theme_border_radius', $settings->get('theme')->firstWhere('key', 'theme_border_radius')->value ?? '16')); ?>px"></div>
                     </div>
                 </div>
 
-                {{-- Color Presets --}}
+                
                 <div class="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-xl p-4 border border-indigo-200 dark:border-gray-600">
                     <h3 class="text-sm font-bold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
@@ -1650,7 +1651,7 @@
                     </div>
                 </div>
 
-                {{-- Reset Button --}}
+                
                 <div class="flex justify-end">
                     <button type="button" onclick="resetTheme()" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-semibold transition-all text-sm">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
@@ -1660,9 +1661,9 @@
             </div>
         </div>
 
-        {{-- Submit Button --}}
+        
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 md:gap-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 p-4 md:p-6">
-            <a href="{{ route('admin.dashboard') }}" class="px-4 md:px-6 py-2.5 md:py-3 text-center text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl font-semibold transition-all text-sm md:text-base">
+            <a href="<?php echo e(route('admin.dashboard')); ?>" class="px-4 md:px-6 py-2.5 md:py-3 text-center text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl font-semibold transition-all text-sm md:text-base">
                 Batal
             </a>
             <button type="submit" id="submit-settings-btn" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 dark:from-emerald-500 dark:to-teal-500 dark:hover:from-emerald-600 dark:hover:to-teal-600 text-white px-6 md:px-8 py-2.5 md:py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-sm md:text-base">
@@ -1672,7 +1673,7 @@
         </div>
     </form>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <script>
 // Tab switching functionality with localStorage persistence
 document.addEventListener('DOMContentLoaded', function() {
@@ -1774,7 +1775,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function openImagesFolder() {
-    window.location.href = '{{ route("admin.settings.openFolder", ["folder" => "images"]) }}';
+    window.location.href = '<?php echo e(route("admin.settings.openFolder", ["folder" => "images"])); ?>';
 }
 
 function togglePreview(id) {
@@ -1974,7 +1975,7 @@ async function uploadImage(input, fieldId) {
     // Create form data
     const formData = new FormData();
     formData.append('image', file);
-    formData.append('_token', '{{ csrf_token() }}');
+    formData.append('_token', '<?php echo e(csrf_token()); ?>');
     
     // Show loading state
     const inputField = document.getElementById(fieldId);
@@ -1983,7 +1984,7 @@ async function uploadImage(input, fieldId) {
     inputField.disabled = true;
     
     try {
-        const response = await fetch('{{ route("admin.settings.upload-image") }}', {
+        const response = await fetch('<?php echo e(route("admin.settings.upload-image")); ?>', {
             method: 'POST',
             body: formData
         });
@@ -2050,7 +2051,7 @@ async function previewImage(input, previewId, fieldId) {
     // Upload file
     const formData = new FormData();
     formData.append('image', file);
-    formData.append('_token', '{{ csrf_token() }}');
+    formData.append('_token', '<?php echo e(csrf_token()); ?>');
     
     // Show loading notification
     const loadingMsg = document.createElement('div');
@@ -2060,7 +2061,7 @@ async function previewImage(input, previewId, fieldId) {
     document.body.appendChild(loadingMsg);
     
     try {
-        const response = await fetch('{{ route("admin.settings.upload-image") }}', {
+        const response = await fetch('<?php echo e(route("admin.settings.upload-image")); ?>', {
             method: 'POST',
             body: formData
         });
@@ -2075,7 +2076,7 @@ async function previewImage(input, previewId, fieldId) {
             document.getElementById(fieldId).value = data.path;
             
             // Update preview with uploaded image
-            document.getElementById(previewId).src = '{{ asset("") }}' + data.path.replace(/^\//, '');
+            document.getElementById(previewId).src = '<?php echo e(asset("")); ?>' + data.path.replace(/^\//, '');
             
             // Show success message
             const successMsg = document.createElement('div');
@@ -2095,7 +2096,7 @@ async function previewImage(input, previewId, fieldId) {
         // Restore original preview
         const originalValue = document.getElementById(fieldId).value;
         if (originalValue) {
-            document.getElementById(previewId).src = '{{ asset("") }}' + originalValue.replace(/^\//, '');
+            document.getElementById(previewId).src = '<?php echo e(asset("")); ?>' + originalValue.replace(/^\//, '');
         }
         
         // Show error message
@@ -2269,7 +2270,9 @@ async function resetTheme() {
     updateRadiusPreview(16);
 }
 </script>
-@endpush
-@endif
+<?php $__env->stopPush(); ?>
+<?php endif; ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Project\BumiAsriParahyangan\resources\views/admin/settings.blade.php ENDPATH**/ ?>

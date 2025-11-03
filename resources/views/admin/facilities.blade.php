@@ -175,8 +175,10 @@ document.addEventListener('DOMContentLoaded', function(){
 						const pagination = doc.querySelector('#facilities-pagination');
 						const paginationEl = document.getElementById('facilities-pagination');
 						if (pagination && paginationEl) paginationEl.innerHTML = pagination.innerHTML;
-					} catch (e) {  }
-				}).catch(err => );
+					} catch (e) { console.error('Facilities search error:', e); }
+				}).catch(function(err) {
+					console.error('Facilities fetch error:', err);
+				});
 		}
 
 		searchInput.addEventListener('input', function(e){
@@ -212,8 +214,10 @@ document.addEventListener('DOMContentLoaded', function(){
 								table.setAttribute('data-start', doc.querySelector('table.min-w-full').getAttribute('data-start') || '0');
 							}
 							history.pushState({ ajax: true }, '', url);
-						} catch (e) {  }
-					}).catch(err => );
+						} catch (e) { console.error('Pagination error:', e); }
+					}).catch(function(err) {
+						console.error('Pagination fetch error:', err);
+					});
 			}
 		});
 
@@ -246,9 +250,11 @@ document.addEventListener('DOMContentLoaded', function(){
 								table.setAttribute('data-per-page', tableDoc.getAttribute('data-per-page') || '12');
 								table.setAttribute('data-start', tableDoc.getAttribute('data-start') || '0');
 							}
-						} catch (e) {  }
-					}).catch(err => );
-			} catch (e) {  }
+						} catch (e) { console.error('Sort error:', e); }
+					}).catch(function(err) {
+						console.error('Sort fetch error:', err);
+					});
+			} catch (e) { console.error('Sort click error:', e); }
 		});
 	}
 });

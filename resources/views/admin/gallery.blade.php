@@ -92,10 +92,10 @@
 					@include('admin._gallery_grid', ['images' => $images])
 				</div>
 
-				<div id="gallery-pagination">@include('admin._gallery_pagination', ['images' => $images])</div>
+				<div id="gallery-pagination" class="mt-6">
+					{{ $images->links() }}
+				</div>
 			</div>
-
-			<div class="mt-6 px-6 pb-6">{{ $images->links() }}</div>
 		</div>
 	@endif
 </div>
@@ -318,9 +318,11 @@ document.getElementById('create-gallery-btn')?.addEventListener('click', functio
 		.then(r => r.text())
 		.then(html => {
 			const modal = openModal(html);
-			try { initGalleryModal(modal); } catch (err) {  }
+			try { initGalleryModal(modal); } catch (err) { console.error('Modal init error:', err); }
 		})
-		.catch(err => );
+		.catch(function(err) {
+			console.error('Create gallery fetch error:', err);
+		});
 });
 
 // select-all wiring
@@ -342,7 +344,11 @@ document.addEventListener('DOMContentLoaded', function(){
 			e.preventDefault();
 			const checkboxes = Array.from(document.querySelectorAll('input[data-bulk]'));
 			const ids = checkboxes.filter(cb => cb.checked).map(cb => cb.value);
-			if (ids.length === 0) { showToast('Pilih minimal satu gambar.', 'error'); return; }
+			
+			if (ids.length === 0) { 
+				showAlert('Pilih minimal satu gambar.', 'info');
+				return; 
+			}
 			const endpoint = dlBtn.getAttribute('data-bulk-download');
 			// attempt AJAX POST and handle blob response
 			try {
@@ -393,6 +399,68 @@ document.addEventListener('DOMContentLoaded', function(){
 				const spinner = dlBtn.querySelector('.dl-spinner');
 				if (label) label.classList.remove('hidden');
 				if (spinner) spinner.classList.add('hidden');
+			}
+		});
+	}
+
+	// Delete selected images
+	const deleteBtn = document.getElementById('delete-selected');
+	if (deleteBtn) {
+		deleteBtn.addEventListener('click', async function(e){
+			e.preventDefault();
+			const checkboxes = Array.from(document.querySelectorAll('input[data-bulk]'));
+			const ids = checkboxes.filter(cb => cb.checked).map(cb => cb.value);
+			
+			if (ids.length === 0) { 
+				showAlert('Pilih minimal satu gambar.', 'info');
+				return; 
+			}
+			
+			const confirmed = await showConfirm('Hapus ' + ids.length + ' gambar yang dipilih?');
+			if (!confirmed) {
+				return;
+			}
+			
+			const endpoint = deleteBtn.getAttribute('data-bulk-delete');
+			
+			try {
+				deleteBtn.disabled = true;
+				deleteBtn.textContent = 'Menghapus...';
+				
+				const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+				const res = await fetch(endpoint, { 
+					method: 'POST', 
+					headers: { 
+						'X-CSRF-TOKEN': token, 
+						'X-Requested-With': 'XMLHttpRequest', 
+						'Content-Type': 'application/json' 
+					}, 
+					body: JSON.stringify({ ids }) 
+				});
+				
+				if (!res.ok) {
+					const ct = (res.headers.get('content-type')||'').toLowerCase();
+					let msg = 'Gagal menghapus gambar.';
+					if (ct.includes('application/json')) {
+						const j = await res.json().catch(()=>null);
+						if (j && j.message) msg = j.message;
+					}
+					showAlert(msg, 'error');
+					return;
+				}
+				
+				const data = await res.json();
+				
+				if (data.success || data.message) {
+					// Reload page to show updated gallery
+					window.location.reload();
+				}
+			} catch (err) {
+				console.error('Delete error:', err);
+				showAlert('Error: ' + err.message, 'error');
+			} finally {
+				deleteBtn.disabled = false;
+				deleteBtn.innerHTML = '<svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg><span class="hidden sm:inline">Hapus Terpilih</span><span class="sm:hidden">Hapus</span>';
 			}
 		});
 	}

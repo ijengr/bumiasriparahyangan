@@ -207,13 +207,13 @@ function uploadAvatar(input) {
         
         // Validate file type
         if (!file.type.match('image.*')) {
-            alert('File harus berupa gambar!');
+            showAlert('File harus berupa gambar!', 'error');
             return;
         }
         
         // Validate file size (3MB)
         if (file.size > 3 * 1024 * 1024) {
-            alert('Ukuran file maksimal 3MB!');
+            showAlert('Ukuran file maksimal 3MB!', 'error');
             return;
         }
         
@@ -254,8 +254,9 @@ function uploadAvatar(input) {
 }
 
 // Delete Avatar
-function deleteAvatar() {
-    if (!confirm('Apakah Anda yakin ingin menghapus foto profil?')) {
+async function deleteAvatar() {
+    const confirmed = await showConfirm('Apakah Anda yakin ingin menghapus foto profil?');
+    if (!confirmed) {
         return;
     }
     

@@ -36,7 +36,7 @@
                 </svg>
                 Kembali
             </a>
-            <form action="{{ route('admin.messages.destroy', $message) }}" method="post" onsubmit="return confirm('Hapus pesan ini?');">
+            <form action="{{ route('admin.messages.destroy', $message) }}" method="post" onsubmit="event.preventDefault(); showConfirm('Hapus pesan ini?').then(ok => { if (ok) this.submit(); });">
                 @csrf @method('DELETE')
                 <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

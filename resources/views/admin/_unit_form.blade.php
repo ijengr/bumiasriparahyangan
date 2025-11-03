@@ -105,21 +105,38 @@
                 file:bg-emerald-50 file:text-emerald-700
                 hover:file:bg-emerald-100">
         </div>
+        
+        {{-- Upload Progress Bar --}}
+        <div id="upload-progress-container" class="hidden mt-3">
+            <div class="flex items-center justify-between text-sm mb-1">
+                <span class="text-gray-700 font-medium">Mengupload...</span>
+                <span id="upload-progress-text" class="text-emerald-600 font-bold">0%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                <div id="upload-progress-bar" class="bg-gradient-to-r from-emerald-500 to-teal-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <p class="text-xs text-gray-500 mt-1" id="upload-status">Memproses gambar...</p>
+        </div>
+        
         <p class="text-xs text-gray-500 mt-2">Unggah beberapa gambar sekaligus. Maks 2MB per gambar.</p>
         
         @if(isset($unit) && !empty($unit->images))
         <div class="mt-4">
             <p class="text-sm font-medium text-gray-700 mb-2">Gambar Yang Ada:</p>
+            
             <div id="existing-images-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 @foreach($unit->images as $imagePath)
                     @php
                         $imageUrl = asset('storage/' . ltrim($imagePath, '/'));
+                        $escapedPath = htmlspecialchars($imagePath, ENT_QUOTES, 'UTF-8');
                     @endphp
-                    <div class="relative group" data-image-path="{{ $imagePath }}">
-                        <img src="{{ $imageUrl }}" alt="additional image" class="w-full h-32 object-cover rounded-md border border-gray-200">
+                    <div class="relative group image-item" data-image-path="{{ $escapedPath }}">
+                        <img src="{{ $imageUrl }}" alt="additional image" class="w-full h-32 object-cover rounded-md border-2 border-gray-200 transition-all duration-200">
+                        
+                        {{-- Single delete button --}}
                         <button type="button" 
-                                onclick="deleteAdditionalImage(this, '{{ $imagePath }}')"
-                                class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                onclick="deleteSingleImage(this)"
+                                class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full p-1.5 shadow-lg transition-all transform hover:scale-110">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                             </svg>
@@ -146,7 +163,39 @@
 </form>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+// Use event delegation since modal is loaded dynamically
+document.addEventListener('change', function(e) {
+    // Check if the changed element is an image checkbox
+    if (e.target && e.target.classList.contains('image-checkbox')) {
+        updateDeleteButton();
+        updateSelectedOverlay(e.target);
+    }
+});
+
+function updateSelectedOverlay(checkbox) {
+    const container = checkbox.closest('.image-item');
+    if (!container) return;
+    
+    const overlay = container.querySelector('.selected-overlay');
+    const img = container.querySelector('img');
+    
+    if (checkbox.checked) {
+        if (overlay) overlay.style.opacity = '1';
+        if (img) {
+            img.style.borderColor = '#dc2626';
+            img.style.borderWidth = '3px';
+        }
+    } else {
+        if (overlay) overlay.style.opacity = '0';
+        if (img) {
+            img.style.borderColor = '#e5e7eb';
+            img.style.borderWidth = '2px';
+        }
+    }
+}
+
+// Initialize when script loads
+(function() {
     // Client-side image compression for main image
     const imageInput = document.getElementById('image-input');
     const previewImage = document.getElementById('preview-image');
@@ -156,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const file = e.target.files[0];
             if (!file) return;
             
-            // Show loading
             previewImage.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><text y="30" font-size="10">Compressing...</text></svg>';
             
             new Compressor(file, {
@@ -164,14 +212,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 maxWidth: 1920,
                 maxHeight: 1920,
                 success(result) {
-                    // Preview compressed image
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         previewImage.src = e.target.result;
                     };
                     reader.readAsDataURL(result);
                     
-                    // Replace file input with compressed version
                     const dataTransfer = new DataTransfer();
                     dataTransfer.items.add(new File([result], file.name, {
                         type: result.type,
@@ -180,7 +226,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     imageInput.files = dataTransfer.files;
                 },
                 error(err) {
-                    // Fallback to original
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         previewImage.src = e.target.result;
@@ -191,17 +236,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Client-side compression for additional images
+    // Client-side compression for additional images with progress
     const additionalInput = document.getElementById('additional-images-input');
+    const progressContainer = document.getElementById('upload-progress-container');
+    const progressBar = document.getElementById('upload-progress-bar');
+    const progressText = document.getElementById('upload-progress-text');
+    const uploadStatus = document.getElementById('upload-status');
+    
     if (additionalInput) {
         additionalInput.addEventListener('change', function(e) {
             const files = Array.from(e.target.files);
             if (files.length === 0) return;
             
+            if (progressContainer) {
+                progressContainer.classList.remove('hidden');
+                progressBar.style.width = '0%';
+                progressText.textContent = '0%';
+            }
+            
             const dataTransfer = new DataTransfer();
             let processed = 0;
             
-            files.forEach((file, index) => {
+            files.forEach((file) => {
                 new Compressor(file, {
                     quality: 0.85,
                     maxWidth: 1920,
@@ -211,22 +267,38 @@ document.addEventListener('DOMContentLoaded', function() {
                         }));
                         processed++;
                         
+                        const percent = Math.round((processed / files.length) * 100);
+                        if (progressBar) progressBar.style.width = percent + '%';
+                        if (progressText) progressText.textContent = percent + '%';
+                        if (uploadStatus) uploadStatus.textContent = `Memproses ${processed} dari ${files.length} gambar...`;
+                        
                         if (processed === files.length) {
                             additionalInput.files = dataTransfer.files;
+                            if (uploadStatus) uploadStatus.textContent = 'Siap diupload!';
+                            setTimeout(() => {
+                                if (progressContainer) progressContainer.classList.add('hidden');
+                            }, 1500);
                         }
                     },
                     error(err) {
                         dataTransfer.items.add(file);
                         processed++;
                         
+                        const percent = Math.round((processed / files.length) * 100);
+                        if (progressBar) progressBar.style.width = percent + '%';
+                        if (progressText) progressText.textContent = percent + '%';
+                        
                         if (processed === files.length) {
                             additionalInput.files = dataTransfer.files;
+                            setTimeout(() => {
+                                if (progressContainer) progressContainer.classList.add('hidden');
+                            }, 1500);
                         }
                     }
                 });
             });
         });
     }
-});
+})();
 </script>
 

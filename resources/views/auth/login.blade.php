@@ -95,11 +95,7 @@
                             <span class="ml-2 text-sm text-gray-600">Ingat Saya</span>
                         </label>
 
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition duration-150">
-                                Lupa Password?
-                            </a>
-                        @endif
+                       
                     </div>
 
                     {{-- Login Button --}}
@@ -126,7 +122,7 @@
 
             {{-- Back to Home --}}
             <div class="mt-6 text-center">
-                <a href="{{ route('landing') }}" class="inline-flex items-center text-sm font-medium text-emerald-600 hover:text-emerald-700 transition duration-150">
+                <a href="{{ route('landing.index') }}" class="inline-flex items-center text-sm font-medium text-emerald-600 hover:text-emerald-700 transition duration-150">
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
